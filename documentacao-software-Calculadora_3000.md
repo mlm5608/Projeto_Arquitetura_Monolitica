@@ -4,7 +4,7 @@
 |---|---|
 | **Versão do documento** | 1.0 |
 | **Data** | 11/09/2026 |
-| **Autor(es)** | Bianca Alves / Beatriz Feitosa / Henrique Gonzalez / Felipe Penha / Matheus Sivero / Miguel Moreira |
+| **Autor(es)** | Bianca Alves, Beatriz Feitosa, Felipe Penha, Henrique Gonzalez, Matheus Sivero, Miguel Moreira |
 | **Status** | Rascunho |
 | **Aprovado por** | *(não aplicável — projeto acadêmico)* |
 
@@ -12,7 +12,7 @@
 
 | Versão | Data | Autor | Descrição da alteração |
 |---|---|---|---|
-| 1.0 | 11/09/2026 | Miguel Moreira | Criação do documento a partir de levantamento de requisitos |
+| 1.0 | 11/09/2026 | Bianca Alves, Beatriz Feitosa, Felipe Penha, Henrique Gonzalez, Matheus Sivero, Miguel Moreira | Criação do documento a partir de levantamento de requisitos |
 
 ---
 
@@ -43,7 +43,7 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 
 | Nome / Papel | Responsabilidade | Contato |
 |---|---|---|
-| Desenvolvedor / Autor | Desenvolvimento completo do sistema | |
+| Bianca Alves, Beatriz Feitosa, Felipe Penha, Henrique Gonzalez, Matheus Sivero, Miguel Moreira | Desenvolvimento completo do sistema (grupo) | |
 | Professor / Avaliador | Avaliação do projeto acadêmico | |
 
 ---
@@ -309,6 +309,14 @@ Arquitetura **monolítica simples**, sem separação em camadas (model/service/v
 
 ### 6.2 Diagrama de arquitetura (visão geral)
 
+```mermaid
+flowchart TD
+    A[Usuário via Console] --> B[Classe Main]
+    B --> C[Métodos de Operação: soma, subtração, multiplicação, divisão com/sem resto, potenciação, radiciação]
+    B --> D[Método de Leitura de Entrada]
+    B --> E[Método de Gravação/Leitura de Histórico]
+    E --> F[(Arquivo CSV/TXT)]
+```
 
 ### 6.3 Componentes / Módulos
 
@@ -353,7 +361,7 @@ data_hora,operacao,operando1,operando2,resultado
 /src
   Main.java
 /historico
-  historico.txt
+  historico.csv
 /docs
   Documentacao_Calculadora_Java.md
 ```
