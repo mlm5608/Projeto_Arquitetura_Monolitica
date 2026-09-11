@@ -4,7 +4,7 @@
 |---|---|
 | **Versão do documento** | 1.0 |
 | **Data** | 11/09/2026 |
-| **Autor(es)** | *(a preencher)* |
+| **Autor(es)** | Bianca Alves / Beatriz Feitosa / Henrique Gonzalez / Felipe Penha / Matheus Sivero / Miguel Moreira |
 | **Status** | Rascunho |
 | **Aprovado por** | *(não aplicável — projeto acadêmico)* |
 
@@ -12,7 +12,7 @@
 
 | Versão | Data | Autor | Descrição da alteração |
 |---|---|---|---|
-| 1.0 | 11/09/2026 | | Criação do documento a partir de levantamento de requisitos |
+| 1.0 | 11/09/2026 | Miguel Moreira | Criação do documento a partir de levantamento de requisitos |
 
 ---
 
