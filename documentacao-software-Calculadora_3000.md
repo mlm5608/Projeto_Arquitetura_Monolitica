@@ -43,7 +43,12 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 
 | Nome / Papel | Responsabilidade | Contato |
 |---|---|---|
-| Bianca Alves, Beatriz Feitosa, Felipe Penha, Henrique Gonzalez, Matheus Sivero, Miguel Moreira | Desenvolvimento completo do sistema (grupo) | |
+| Bianca Alves | Desenvolvimento completo do sistema (grupo) | |
+| Beatriz Feitosa | Desenvolvimento completo do sistema (grupo) | |
+| Felipe Penha | Desenvolvimento completo do sistema (grupo) | |
+| Henrique Gonzalez | Desenvolvimento completo do sistema (grupo) | |
+| Matheus Sivero | Desenvolvimento completo do sistema (grupo) | |
+| Miguel Moreira | Desenvolvimento completo do sistema (grupo) | |
 | Professor / Avaliador | Avaliação do projeto acadêmico | |
 
 ---
@@ -60,7 +65,7 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 - Potenciação (base elevada a um expoente).
 - Radiciação (raiz de índice n de um número).
 - Interface via console com menu numerado.
-- Persistência do histórico de operações em arquivo (CSV/TXT).
+- Persistência do histórico de operações em arquivo de texto.
 - Tratamento robusto de erros de entrada e de cálculo.
 
 ### 2.3 Fora do escopo (Out of Scope)
@@ -115,8 +120,8 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 | RF-03 | O sistema deve permitir ao usuário realizar a operação de **subtração** entre dois números. | Alta | Autor | A implementar |
 | RF-04 | O sistema deve permitir ao usuário realizar a operação de **multiplicação** entre dois números. | Alta | Autor | A implementar |
 | RF-05 | O sistema deve permitir ao usuário realizar a operação de **divisão** entre dois números, com a opção de escolher entre **divisão com resto** (quociente e resto, para números inteiros) ou **divisão sem resto** (resultado decimal exato). | Alta | Autor | A implementar |
-| RF-06 | O sistema deve registrar cada operação realizada (operandos, operação e resultado) em um arquivo de histórico (CSV/TXT). | Alta | Autor | A implementar |
-| RF-07 | O sistema deve permitir ao usuário consultar o histórico de operações realizadas na sessão atual e/ou em sessões anteriores. | Média | Autor | A implementar |
+| RF-06 | O sistema deve registrar cada operação realizada (operandos, operação e resultado) em um arquivo de histórico (TXT). | Baixa | Autor | A implementar |
+| RF-07 | O sistema deve permitir ao usuário consultar o histórico de operações realizadas na sessão atual e/ou em sessões anteriores. | Baixa | Autor | A implementar |
 | RF-08 | O sistema deve retornar ao menu principal após a conclusão de cada operação, até que o usuário escolha encerrar. | Alta | Autor | A implementar |
 | RF-09 | O sistema deve permitir o encerramento controlado da aplicação a partir do menu. | Alta | Autor | A implementar |
 | RF-10 | O sistema deve permitir ao usuário realizar a operação de **potenciação**, informando a base e o expoente. | Alta | Autor | A implementar |
@@ -270,7 +275,7 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 | RNF-04 | Usabilidade | Operabilidade | O menu deve ser claro o suficiente para uso sem necessidade de manual. | Usuário consegue operar sem consulta externa | Média |
 | RNF-05 | Confiabilidade | Corretude | Os resultados das operações devem ser matematicamente corretos, sem limite artificial de casas decimais ou de valor (ver RN-01). | 100% de acerto nos casos de teste da seção 7 | Alta |
 | RNF-06 | Manutenibilidade | Analisabilidade | Ainda que concentrado na classe `Main`, o código deve ser organizado com métodos bem nomeados e comentários, facilitando leitura. | Revisão de código / clareza dos métodos | Média |
-| RNF-07 | Compatibilidade | Interoperabilidade | O arquivo de histórico deve ser gerado em formato aberto (CSV/TXT) legível por editores de texto e planilhas. | Arquivo abre corretamente em editor de texto/Excel | Média |
+| RNF-07 | Compatibilidade | Interoperabilidade | O arquivo de histórico deve ser gerado em formato aberto (TXT) legível por editores de texto e planilhas. | Arquivo abre corretamente em editor de texto | Média |
 | RNF-08 | Portabilidade | Adaptabilidade | O sistema deve rodar em qualquer ambiente com JDK compatível instalado (Windows, Linux, macOS). | Execução bem-sucedida via `javac`/`java` nos 3 sistemas operacionais | Baixa |
 
 > **Nota:** a versão do Java (8, 11, 17 ou 21) ainda não foi definida. Recomenda-se adotar uma versão **LTS** (11, 17 ou 21) para maior compatibilidade e suporte, mesmo em projeto acadêmico sem build tool. Essa decisão deve ser registrada assim que definida (ADR-01, seção 6.6).
@@ -309,21 +314,12 @@ Arquitetura **monolítica simples**, sem separação em camadas (model/service/v
 
 ### 6.2 Diagrama de arquitetura (visão geral)
 
-```mermaid
-flowchart TD
-    A[Usuário via Console] --> B[Classe Main]
-    B --> C[Métodos de Operação: soma, subtração, multiplicação, divisão com/sem resto, potenciação, radiciação]
-    B --> D[Método de Leitura de Entrada]
-    B --> E[Método de Gravação/Leitura de Histórico]
-    E --> F[(Arquivo CSV/TXT)]
-```
-
 ### 6.3 Componentes / Módulos
 
 | Componente | Responsabilidade | Tecnologia |
 |---|---|---|
 | Classe `Main` | Concentra toda a lógica: menu, operações, entrada/saída e histórico | Java (SE) |
-| Arquivo de histórico | Persistência simples de operações realizadas | Arquivo CSV/TXT em disco |
+| Arquivo de histórico | Persistência simples de operações realizadas | Arquivo TXT em disco |
 
 ### 6.4 Stack tecnológica
 
@@ -353,7 +349,7 @@ data_hora,operacao,operando1,operando2,resultado
 | ADR-01 | Definir versão do Java a ser utilizada | Versão ainda não escolhida pelo autor | Java 8, 11, 17, 21 | *(pendente — recomendação: LTS mais recente disponível no ambiente do autor)* |
 | ADR-02 | Não utilizar camadas (model/service/view) | Projeto didático, escopo reduzido | Arquitetura em camadas | Simplicidade e foco no aprendizado de lógica básica |
 | ADR-03 | Não utilizar ferramenta de build (Maven/Gradle) | Projeto simples, sem dependências externas | Maven, Gradle | Não há dependências de terceiros que justifiquem a ferramenta |
-| ADR-04 | Persistência via arquivo (CSV/TXT) em vez de banco de dados | Simplicidade e caráter didático | Banco de dados relacional (ex.: SQLite) | Evita complexidade desnecessária de configuração de banco |
+| ADR-04 | Persistência via arquivo (TXT) em vez de banco de dados | Simplicidade e caráter didático | Banco de dados relacional (ex.: SQL Server) | Evita complexidade desnecessária de configuração de banco |
 
 ### 6.7 Estrutura de pastas do projeto
 
@@ -457,6 +453,6 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 ## 10. Anexos e Referências
 
 - Link para protótipos / wireframes: *(não aplicável — aplicação de console)*
-- Link para repositório de código: *(a preencher)*
+- Link para repositório de código: https://github.com/mlm5608/Projeto_Arquitetura_Monolitica
 - Link para backlog / board: *(não aplicável)*
 - Documentos de referência: ISO/IEC 25010 (características de qualidade de software)
