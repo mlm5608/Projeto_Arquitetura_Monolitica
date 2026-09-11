@@ -1,18 +1,18 @@
-# Documentação do Software — [Nome do Projeto]
+# Documentação do Software — Calculadora Java (Console)
 
 | Campo | Valor |
 |---|---|
 | **Versão do documento** | 1.0 |
-| **Data** | DD/MM/AAAA |
-| **Autor(es)** | |
-| **Status** | Rascunho / Em revisão / Aprovado |
-| **Aprovado por** | |
+| **Data** | 11/09/2026 |
+| **Autor(es)** | *(a preencher)* |
+| **Status** | Rascunho |
+| **Aprovado por** | *(não aplicável — projeto acadêmico)* |
 
 ## Histórico de Revisões
 
 | Versão | Data | Autor | Descrição da alteração |
 |---|---|---|---|
-| 1.0 | DD/MM/AAAA | | Criação do documento |
+| 1.0 | 11/09/2026 | | Criação do documento a partir de levantamento de requisitos |
 
 ---
 
@@ -34,55 +34,65 @@
 ## 1. Visão Geral
 
 ### 1.1 Propósito do documento
-Descreva o objetivo desta documentação e para quem ela se destina (equipe de desenvolvimento, QA, stakeholders, etc.).
+Este documento descreve os requisitos, regras de negócio, arquitetura e plano de testes de uma calculadora desenvolvida em Java, com finalidade acadêmica/didática. Destina-se ao próprio desenvolvedor e a eventuais avaliadores (professores, colegas) do projeto.
 
 ### 1.2 Descrição resumida do sistema
-Breve parágrafo explicando o que o sistema faz e qual problema resolve.
+Sistema **monolítico**, executado via **console (linha de comando)**, que realiza as quatro operações matemáticas básicas (soma, subtração, multiplicação e divisão). O usuário interage por meio de um **menu numerado**, e cada operação realizada é registrada em um **arquivo de histórico** (CSV/TXT) para consulta posterior.
 
 ### 1.3 Stakeholders
 
 | Nome / Papel | Responsabilidade | Contato |
 |---|---|---|
-| Product Owner | | |
-| Arquiteto de Software | | |
-| Time de Desenvolvimento | | |
-| Time de QA | | |
-| Cliente / Patrocinador | | |
+| Desenvolvedor / Autor | Desenvolvimento completo do sistema | |
+| Professor / Avaliador | Avaliação do projeto acadêmico | |
 
 ---
 
 ## 2. Escopo do Projeto
 
 ### 2.1 Objetivos do projeto
-Liste os objetivos de negócio que o software pretende atingir.
-
-- Objetivo 1
-- Objetivo 2
+- Praticar lógica de programação e estruturação de código em Java.
+- Implementar uma calculadora funcional via console com persistência simples de histórico.
+- Servir como material de estudo/portfólio didático.
 
 ### 2.2 Dentro do escopo (In Scope)
-- Item 1
-- Item 2
+- Operações básicas: soma, subtração, multiplicação e divisão.
+- Interface via console com menu numerado.
+- Persistência do histórico de operações em arquivo (CSV/TXT).
+- Tratamento robusto de erros de entrada e de cálculo.
 
 ### 2.3 Fora do escopo (Out of Scope)
-- Item 1
-- Item 2
+- Operações científicas (trigonometria, logaritmo, potência, raiz).
+- Operações financeiras (juros, amortização, conversão de moeda).
+- Interface gráfica (Desktop/Web) ou API REST.
+- Autenticação de usuários ou multiusuário.
+- Persistência em banco de dados.
+- Build tool (Maven/Gradle) — compilação será manual via `javac`.
+- Testes automatizados (JUnit) — apenas testes manuais.
 
 ### 2.4 Premissas
-- Premissa 1
-- Premissa 2
+- O usuário possui o JDK instalado e configurado localmente.
+- O sistema será executado localmente, sem necessidade de rede ou servidor.
+- Um único usuário por sessão (uso individual, não concorrente).
 
 ### 2.5 Restrições
-- Restrição 1 (ex.: prazo, orçamento, tecnologia obrigatória)
+- Projeto deve permanecer **monolítico**: todo o código será implementado diretamente na classe `Main`, sem separação em camadas/pacotes (model, service, view etc.).
+- Sem uso de ferramentas de build (Maven/Gradle); compilação e execução manuais via `javac`/`java`.
+- Sem testes automatizados; validação por testes manuais.
+- Versão do Java ainda não definida (ver seção 6.4 — recomendação pendente).
 
 ### 2.6 Riscos identificados
 
 | ID | Risco | Probabilidade | Impacto | Mitigação |
 |---|---|---|---|---|
-| R-01 | | Baixa/Média/Alta | Baixo/Médio/Alto | |
+| R-01 | Ausência de testes automatizados pode deixar passar regressões ao alterar o código | Média | Médio | Elaborar roteiro de testes manuais (seção 7) e executá-lo a cada alteração relevante |
+| R-02 | Falta de limite de casas decimais/valores pode gerar saídas com muitas casas decimais ou overflow em tipos numéricos | Média | Baixo | Utilizar tipo `double` (ou `BigDecimal`, se necessário) e documentar o comportamento esperado |
+| R-03 | Concentração de todo o código na classe `Main` pode dificultar manutenção futura | Alta (é decisão consciente do escopo) | Baixo (aceito para fins didáticos) | Nenhuma — decisão de escopo intencional |
 
 ### 2.7 Entregáveis
-- Entregável 1
-- Entregável 2
+- Código-fonte da calculadora (`Main.java`).
+- Arquivo de histórico gerado em tempo de execução (CSV/TXT).
+- Esta documentação de software.
 
 ---
 
@@ -97,105 +107,119 @@ Liste os objetivos de negócio que o software pretende atingir.
 
 | ID | Descrição | Prioridade | Origem / Solicitante | Status |
 |---|---|---|---|---|
-| RF-01 | O sistema deve permitir que o usuário se autentique com e-mail e senha. | Alta | | A implementar |
-| RF-02 | O sistema deve permitir o cadastro de novos usuários. | Alta | | A implementar |
-| RF-03 | | | | |
+| RF-01 | O sistema deve exibir um menu numerado com as opções disponíveis (Somar, Subtrair, Multiplicar, Dividir, Ver histórico, Sair). | Alta | Autor | A implementar |
+| RF-02 | O sistema deve permitir ao usuário realizar a operação de **soma** entre dois números. | Alta | Autor | A implementar |
+| RF-03 | O sistema deve permitir ao usuário realizar a operação de **subtração** entre dois números. | Alta | Autor | A implementar |
+| RF-04 | O sistema deve permitir ao usuário realizar a operação de **multiplicação** entre dois números. | Alta | Autor | A implementar |
+| RF-05 | O sistema deve permitir ao usuário realizar a operação de **divisão** entre dois números. | Alta | Autor | A implementar |
+| RF-06 | O sistema deve registrar cada operação realizada (operandos, operação e resultado) em um arquivo de histórico (CSV/TXT). | Alta | Autor | A implementar |
+| RF-07 | O sistema deve permitir ao usuário consultar o histórico de operações realizadas na sessão atual e/ou em sessões anteriores. | Média | Autor | A implementar |
+| RF-08 | O sistema deve retornar ao menu principal após a conclusão de cada operação, até que o usuário escolha encerrar. | Alta | Autor | A implementar |
+| RF-09 | O sistema deve permitir o encerramento controlado da aplicação a partir do menu. | Alta | Autor | A implementar |
 
-### 3.2 Detalhamento de Requisito (modelo — repetir para cada RF)
+### 3.2 Detalhamento de Requisitos
 
-#### RF-01 — Autenticação de usuário
-- **Descrição:** O sistema deve permitir que o usuário realize login informando e-mail e senha válidos.
+#### RF-01 — Exibição do menu principal
+- **Descrição:** O sistema deve exibir, ao iniciar e após cada operação, um menu numerado com as opções: 1) Somar, 2) Subtrair, 3) Multiplicar, 4) Dividir, 5) Ver histórico, 6) Sair.
 - **Ator(es):** Usuário
-- **Pré-condições:** Usuário previamente cadastrado.
+- **Pré-condições:** Aplicação em execução.
 - **Fluxo principal:**
-  1. Usuário acessa a tela de login.
-  2. Usuário informa e-mail e senha.
-  3. Sistema valida as credenciais.
-  4. Sistema redireciona para a página inicial.
+  1. Sistema exibe as opções numeradas no console.
+  2. Usuário digita o número correspondente à opção desejada.
+  3. Sistema valida a opção e direciona para o fluxo correspondente.
 - **Fluxos alternativos / exceções:**
-  - Credenciais inválidas → sistema exibe mensagem de erro.
-- **Pós-condições:** Usuário autenticado e sessão criada.
+  - Opção inválida (número fora do intervalo ou não numérico) → sistema exibe mensagem de erro e reexibe o menu.
+- **Pós-condições:** Usuário direcionado à funcionalidade escolhida.
 - **Critérios de aceite:**
-  - [ ] Login com credenciais válidas é bem-sucedido.
-  - [ ] Login com credenciais inválidas é rejeitado com mensagem clara.
-- **Requisitos relacionados:** RNF-02, RN-01
+  - [ ] Menu exibido corretamente com todas as opções.
+  - [ ] Entrada inválida não derruba a aplicação e reexibe o menu.
+- **Requisitos relacionados:** RNF-04 (usabilidade), RN-03
+
+#### RF-02 a RF-05 — Operações matemáticas (soma, subtração, multiplicação, divisão)
+- **Descrição:** O sistema deve solicitar dois números ao usuário e executar a operação escolhida, exibindo o resultado no console.
+- **Ator(es):** Usuário
+- **Pré-condições:** Usuário selecionou uma operação válida no menu.
+- **Fluxo principal:**
+  1. Sistema solicita o primeiro número.
+  2. Sistema solicita o segundo número.
+  3. Sistema executa a operação.
+  4. Sistema exibe o resultado.
+  5. Sistema registra a operação no histórico (RF-06).
+- **Fluxos alternativos / exceções:**
+  - Entrada não numérica → sistema exibe mensagem de erro específica e solicita nova entrada.
+  - Divisão por zero (RF-05) → sistema exibe mensagem de erro específica, sem interromper a aplicação.
+- **Pós-condições:** Resultado exibido e operação registrada no histórico.
+- **Critérios de aceite:**
+  - [ ] Cada operação retorna o resultado matematicamente correto.
+  - [ ] Divisão por zero é tratada com mensagem clara, sem crash da aplicação.
+  - [ ] Entradas não numéricas são rejeitadas com mensagem clara.
+- **Requisitos relacionados:** RNF-05 (confiabilidade), RN-01, RN-02
+
+#### RF-06 — Registro de histórico em arquivo
+- **Descrição:** Cada operação concluída deve ser gravada em um arquivo (CSV ou TXT), contendo operandos, tipo de operação, resultado e data/hora.
+- **Ator(es):** Sistema (automático, após cada operação)
+- **Pré-condições:** Operação concluída com sucesso.
+- **Fluxo principal:**
+  1. Sistema monta a linha de registro (data/hora, operação, operandos, resultado).
+  2. Sistema grava (append) a linha no arquivo de histórico.
+- **Fluxos alternativos / exceções:**
+  - Falha ao gravar no arquivo (ex.: permissão negada) → sistema exibe aviso ao usuário, mas não interrompe a operação de cálculo.
+- **Pós-condições:** Arquivo de histórico atualizado.
+- **Critérios de aceite:**
+  - [ ] Toda operação bem-sucedida gera uma linha no arquivo.
+  - [ ] Formato do arquivo é consistente e legível (CSV ou TXT).
+- **Requisitos relacionados:** RNF-06 (manutenibilidade), RNF-08 (portabilidade)
+
+#### RF-07 — Consulta de histórico
+- **Descrição:** O sistema deve permitir ao usuário visualizar, a partir do menu, o conteúdo do arquivo de histórico.
+- **Ator(es):** Usuário
+- **Pré-condições:** Arquivo de histórico existente (pode estar vazio na primeira execução).
+- **Fluxo principal:**
+  1. Usuário seleciona a opção "Ver histórico".
+  2. Sistema lê o arquivo e exibe seu conteúdo no console.
+- **Fluxos alternativos / exceções:**
+  - Arquivo inexistente ou vazio → sistema informa que não há histórico registrado ainda.
+- **Pós-condições:** Histórico exibido ao usuário.
+- **Critérios de aceite:**
+  - [ ] Histórico exibido corresponde ao conteúdo real do arquivo.
+  - [ ] Mensagem amigável quando não há histórico.
+- **Requisitos relacionados:** RF-06
 
 ---
 
 ## 4. Requisitos Não Funcionais
 
-> Requisitos não funcionais descrevem **como** o sistema deve se comportar (qualidade, desempenho, segurança etc.). As categorias abaixo seguem o modelo de qualidade da **ISO/IEC 25010**, complementado por requisitos de **conformidade legal (LGPD)**.
+> Requisitos não funcionais descrevem **como** o sistema deve se comportar. As categorias seguem o modelo de qualidade da **ISO/IEC 25010**.
 
 ### Convenção de ID
 `RNF-XX` (Requisito Não Funcional número XX)
 
-### 4.1 Categorias segundo ISO/IEC 25010
-
-A ISO/IEC 25010 define 8 características de qualidade de produto de software. Use-as para classificar cada RNF:
-
-| Característica ISO 25010 | Subcaracterísticas | Descrição |
-|---|---|---|
-| **Adequação Funcional** | Completude, Corretude, Pertinência funcional | O quanto o sistema atende às funções especificadas e às necessidades reais. |
-| **Eficiência de Desempenho** | Comportamento temporal, Utilização de recursos, Capacidade | Desempenho relativo à quantidade de recursos usados (tempo de resposta, throughput, uso de CPU/memória). |
-| **Compatibilidade** | Coexistência, Interoperabilidade | Capacidade de coexistir com outros sistemas e trocar informações com eles. |
-| **Usabilidade** | Reconhecibilidade, Aprendizagem, Operabilidade, Proteção contra erros, Estética, Acessibilidade | Facilidade de uso e aprendizado pelo usuário. |
-| **Confiabilidade** | Maturidade, Disponibilidade, Tolerância a falhas, Recuperabilidade | Capacidade de manter um nível de desempenho sob condições especificadas. |
-| **Segurança** | Confidencialidade, Integridade, Não repúdio, Responsabilização (accountability), Autenticidade | Proteção de informações e dados contra acesso não autorizado. |
-| **Manutenibilidade** | Modularidade, Reusabilidade, Analisabilidade, Modificabilidade, Testabilidade | Facilidade de modificar e evoluir o software. |
-| **Portabilidade** | Adaptabilidade, Instalabilidade, Substituibilidade | Facilidade de transferir o software entre ambientes. |
-
-### 4.2 Lista de Requisitos Não Funcionais
+### 4.1 Lista de Requisitos Não Funcionais
 
 | ID | Característica ISO 25010 | Subcaracterística | Descrição | Critério de aceite / Métrica | Prioridade |
 |---|---|---|---|---|---|
-| RNF-01 | Eficiência de Desempenho | Comportamento temporal | O sistema deve responder a requisições em até 2 segundos sob carga normal. | Tempo de resposta ≤ 2s (p95) | Alta |
-| RNF-02 | Segurança | Confidencialidade | Senhas devem ser armazenadas com hash e salt. | Uso de bcrypt/argon2 | Alta |
-| RNF-03 | Confiabilidade | Disponibilidade | O sistema deve ter disponibilidade mínima de 99,5% ao mês. | Uptime mensal | Média |
-| RNF-04 | Usabilidade | Acessibilidade | | | |
-| RNF-05 | Eficiência de Desempenho | Capacidade | | | |
-| RNF-06 | Manutenibilidade | Testabilidade | | | |
-| RNF-07 | Compatibilidade | Interoperabilidade | | | |
-| RNF-08 | Portabilidade | Adaptabilidade | | | |
+| RNF-01 | Eficiência de Desempenho | Comportamento temporal | O sistema deve responder às operações de forma imediata (não há processamento pesado). | Resposta perceptivelmente instantânea (< 1s) | Baixa |
+| RNF-02 | Segurança | — | Não se aplica de forma relevante: sistema não trata dados pessoais nem sensíveis. | N/A | N/A |
+| RNF-03 | Confiabilidade | Tolerância a falhas | O sistema não deve encerrar abruptamente diante de entradas inválidas ou divisão por zero. | Nenhum crash em testes de entrada inválida | Alta |
+| RNF-04 | Usabilidade | Operabilidade | O menu deve ser claro o suficiente para uso sem necessidade de manual. | Usuário consegue operar sem consulta externa | Média |
+| RNF-05 | Confiabilidade | Corretude | Os resultados das operações devem ser matematicamente corretos, sem limite artificial de casas decimais ou de valor (ver RN-01). | 100% de acerto nos casos de teste da seção 7 | Alta |
+| RNF-06 | Manutenibilidade | Analisabilidade | Ainda que concentrado na classe `Main`, o código deve ser organizado com métodos bem nomeados e comentários, facilitando leitura. | Revisão de código / clareza dos métodos | Média |
+| RNF-07 | Compatibilidade | Interoperabilidade | O arquivo de histórico deve ser gerado em formato aberto (CSV/TXT) legível por editores de texto e planilhas. | Arquivo abre corretamente em editor de texto/Excel | Média |
+| RNF-08 | Portabilidade | Adaptabilidade | O sistema deve rodar em qualquer ambiente com JDK compatível instalado (Windows, Linux, macOS). | Execução bem-sucedida via `javac`/`java` nos 3 sistemas operacionais | Baixa |
 
-### 4.3 Conformidade com a LGPD (Lei nº 13.709/2018)
+> **Nota:** a versão do Java (8, 11, 17 ou 21) ainda não foi definida. Recomenda-se adotar uma versão **LTS** (11, 17 ou 21) para maior compatibilidade e suporte, mesmo em projeto acadêmico sem build tool. Essa decisão deve ser registrada assim que definida (ADR-01, seção 6.6).
 
-> Requisitos de proteção de dados pessoais tratados pelo sistema, mapeados como RNFs de **Segurança** (confidencialidade/integridade) e de **Adequação Funcional** (conformidade legal), conforme os princípios do Art. 6º da LGPD.
+### 4.2 Conformidade com a LGPD (Lei nº 13.709/2018)
 
-| ID | Princípio / Exigência LGPD | Descrição | Critério de aceite | Prioridade |
-|---|---|---|---|---|
-| RNF-L01 | Finalidade | Dados pessoais só podem ser coletados para finalidades específicas, explícitas e informadas ao titular. | Tela de coleta de dados exibe finalidade antes da submissão. | Alta |
-| RNF-L02 | Consentimento | O sistema deve obter e registrar consentimento explícito do titular antes de coletar dados pessoais, quando essa for a base legal. | Log de consentimento com timestamp, versão do termo e IP. | Alta |
-| RNF-L03 | Minimização de dados | O sistema deve coletar apenas os dados estritamente necessários à finalidade declarada. | Revisão de formulários/campos coletados vs. finalidade. | Alta |
-| RNF-L04 | Direitos do titular (Art. 18) | O sistema deve permitir que o titular acesse, corrija, anonimize, exporte (portabilidade) ou solicite exclusão de seus dados. | Funcionalidade de autoatendimento ou processo com SLA definido (ex.: 15 dias). | Alta |
-| RNF-L05 | Segurança e sigilo (Art. 46) | Dados pessoais devem ser protegidos com medidas técnicas e administrativas contra acessos não autorizados, perda ou vazamento. | Criptografia em trânsito (TLS) e em repouso; controle de acesso por perfil (RBAC). | Alta |
-| RNF-L06 | Retenção e eliminação | Dados pessoais devem ser eliminados ou anonimizados ao final da finalidade ou período legal de retenção. | Rotina automatizada de expurgo/anonimização com registro de execução. | Média |
-| RNF-L07 | Registro de operações (Art. 37) | O sistema deve manter registro das operações de tratamento de dados pessoais realizadas. | Log de auditoria com usuário, ação, dado afetado e data/hora. | Média |
-| RNF-L08 | Notificação de incidentes (Art. 48) | O sistema deve possibilitar a identificação e comunicação de incidentes de segurança que envolvam dados pessoais. | Processo/procedimento de resposta a incidentes documentado e testável. | Alta |
-| RNF-L09 | Privacy by Design / by Default | Configurações padrão do sistema devem privilegiar a menor exposição possível de dados pessoais. | Revisão de configurações padrão (ex.: perfis privados por padrão). | Média |
-| RNF-L10 | Transferência internacional de dados | Caso haja transferência de dados para fora do país, deve haver base legal e garantias adequadas (Art. 33). | Mapeamento de fluxos de dados internacionais e cláusulas contratuais. | Baixa/Média |
+**Não aplicável a este projeto.** A calculadora não coleta, armazena nem processa dados pessoais de titulares — o arquivo de histórico registra apenas operações matemáticas (operandos, operação, resultado, data/hora), sem qualquer dado que identifique uma pessoa física. Por esse motivo, os requisitos RNF-L01 a RNF-L10 do template original não se aplicam e foram suprimidos desta versão do documento.
 
-**Papéis relevantes (LGPD):**
-
-| Papel | Responsabilidade |
-|---|---|
-| Controlador | Define as finalidades e os meios de tratamento dos dados pessoais. |
-| Operador | Realiza o tratamento de dados em nome do controlador (ex.: fornecedor de hospedagem). |
-| Encarregado (DPO) | Canal de comunicação entre controlador, titulares e ANPD. |
-
-### 4.4 Mapeamento RNF × ISO 25010 × LGPD
-
-| ID | Categoria | Referência normativa | Requisito(s) funcional(is) relacionado(s) |
-|---|---|---|---|
-| RNF-02 | Segurança (ISO 25010) | LGPD Art. 46 | RF-01, RF-02 |
-| RNF-L02 | Adequação Funcional / Segurança | LGPD Art. 7º, 8º | RF-02 |
-| RNF-L04 | Adequação Funcional | LGPD Art. 18 | RF-XX (funcionalidade de autoatendimento do titular) |
-| RNF-L07 | Manutenibilidade / Segurança | LGPD Art. 37 | RF-XX (auditoria) |
+Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: nome, e-mail, login), esta seção deve ser revisitada e os requisitos de LGPD reincorporados.
 
 ---
 
 ## 5. Regras de Negócio
 
-> Regras de negócio são políticas, restrições ou lógicas que independem de uma funcionalidade específica e devem ser respeitadas em todo o sistema.
+> Regras de negócio são políticas, restrições ou lógicas que independem de uma funcionalidade específica.
 
 ### Convenção de ID
 `RN-XX` (Regra de Negócio número XX)
@@ -204,101 +228,88 @@ A ISO/IEC 25010 define 8 características de qualidade de produto de software. U
 
 | ID | Descrição | Origem | Requisitos relacionados |
 |---|---|---|---|
-| RN-01 | A senha do usuário deve ter no mínimo 8 caracteres, com letras e números. | | RF-01, RF-02 |
-| RN-02 | Um pedido só pode ser cancelado em até 24 horas após a criação. | | |
-| RN-03 | | | |
+| RN-01 | Não há limite de casas decimais nem de valor máximo/mínimo para os operandos ou resultados — o sistema deve aceitar e exibir os valores conforme a precisão nativa do tipo numérico utilizado. | Autor | RF-02, RF-03, RF-04, RF-05, RNF-05 |
+| RN-02 | A divisão por zero não é uma operação matemática válida; o sistema deve identificá-la e informar o usuário com mensagem específica, sem interromper a aplicação. | Autor | RF-05, RNF-03 |
+| RN-03 | Apenas opções presentes no menu (1 a 6) são aceitas; qualquer outra entrada deve ser rejeitada com nova solicitação. | Autor | RF-01 |
 
 ---
 
 ## 6. Projeto e Arquitetura do Software
 
 ### 6.1 Visão arquitetural
-Descreva o estilo arquitetural adotado (ex.: monolito, microsserviços, serverless, camadas, hexagonal, event-driven).
+Arquitetura **monolítica simples**, sem separação em camadas (model/service/view). Todo o código-fonte será implementado dentro de uma única classe, `Main`, contendo o método `main` e os métodos auxiliares necessários (menu, operações, leitura/escrita de arquivo). Esta é uma decisão de escopo consciente, adequada ao caráter didático do projeto.
 
 ### 6.2 Diagrama de arquitetura (visão geral)
 
 ```mermaid
 flowchart TD
-    A[Cliente / Front-end] --> B[API Gateway]
-    B --> C[Serviço A]
-    B --> D[Serviço B]
-    C --> E[(Banco de Dados)]
-    D --> F[(Cache)]
+    A[Usuário via Console] --> B[Classe Main]
+    B --> C[Métodos de Operação: soma, subtração, multiplicação, divisão]
+    B --> D[Método de Leitura de Entrada]
+    B --> E[Método de Gravação/Leitura de Histórico]
+    E --> F[(Arquivo CSV/TXT)]
 ```
 
 ### 6.3 Componentes / Módulos
 
 | Componente | Responsabilidade | Tecnologia |
 |---|---|---|
-| Front-end | Interface com o usuário | |
-| API / Backend | Regras de negócio e orquestração | |
-| Banco de Dados | Persistência de dados | |
-| Serviço de Autenticação | Login e controle de acesso | |
+| Classe `Main` | Concentra toda a lógica: menu, operações, entrada/saída e histórico | Java (SE) |
+| Arquivo de histórico | Persistência simples de operações realizadas | Arquivo CSV/TXT em disco |
 
 ### 6.4 Stack tecnológica
 
 | Camada | Tecnologia / Ferramenta | Versão |
 |---|---|---|
-| Front-end | | |
-| Back-end | | |
-| Banco de Dados | | |
-| Infraestrutura / Cloud | | |
-| CI/CD | | |
+| Linguagem | Java (SE) | A definir — recomendação: LTS (11, 17 ou 21) |
+| Build | Nenhum — compilação manual | `javac` / `java` |
+| Persistência | Arquivo local (CSV/TXT) | — |
+| Testes | Testes manuais (sem framework) | — |
 
 ### 6.5 Modelo de dados
-Inclua diagrama ER ou descrição das principais entidades.
+Não há modelo de dados relacional (sem banco de dados). O único "dado persistido" é o registro de histórico, estruturado da seguinte forma (exemplo de linha em CSV):
 
-```mermaid
-erDiagram
-    USUARIO ||--o{ PEDIDO : realiza
-    USUARIO {
-        int id
-        string nome
-        string email
-    }
-    PEDIDO {
-        int id
-        date data
-        string status
-    }
+```
+data_hora,operacao,operando1,operando2,resultado
+2026-09-11 14:32:10,SOMA,5,3,8
+2026-09-11 14:33:02,DIVISAO,10,0,ERRO: divisão por zero
 ```
 
 ### 6.6 Decisões de arquitetura (ADR resumido)
 
 | ID | Decisão | Contexto | Alternativas consideradas | Justificativa |
 |---|---|---|---|---|
-| ADR-01 | | | | |
+| ADR-01 | Definir versão do Java a ser utilizada | Versão ainda não escolhida pelo autor | Java 8, 11, 17, 21 | *(pendente — recomendação: LTS mais recente disponível no ambiente do autor)* |
+| ADR-02 | Não utilizar camadas (model/service/view) | Projeto didático, escopo reduzido | Arquitetura em camadas | Simplicidade e foco no aprendizado de lógica básica |
+| ADR-03 | Não utilizar ferramenta de build (Maven/Gradle) | Projeto simples, sem dependências externas | Maven, Gradle | Não há dependências de terceiros que justifiquem a ferramenta |
+| ADR-04 | Persistência via arquivo (CSV/TXT) em vez de banco de dados | Simplicidade e caráter didático | Banco de dados relacional (ex.: SQLite) | Evita complexidade desnecessária de configuração de banco |
 
 ### 6.7 Estrutura de pastas do projeto
 
 ```
 /src
-  /api
-  /domain
-  /infra
-  /tests
+  Main.java
+/historico
+  historico.csv
 /docs
+  Documentacao_Calculadora_Java.md
 ```
 
 ### 6.8 Integrações externas
-
-| Sistema externo | Finalidade | Protocolo | Observações |
-|---|---|---|---|
+Não há integrações com sistemas externos.
 
 ---
 
 ## 7. Plano e Casos de Teste
 
 ### 7.1 Estratégia de testes
-Descreva os tipos de teste utilizados: unitário, integração, sistema, aceitação, carga, segurança, etc., e ferramentas empregadas.
+Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração relevante no código, cobrindo os fluxos principais e as exceções previstas (entrada inválida, divisão por zero, opção de menu inválida).
 
 ### 7.2 Ambientes de teste
 
 | Ambiente | Finalidade | URL / Acesso |
 |---|---|---|
-| Desenvolvimento | | |
-| Homologação (QA) | | |
-| Produção | | |
+| Local (máquina do desenvolvedor) | Desenvolvimento e execução dos testes manuais | Execução via terminal/IDE local |
 
 ### Convenção de ID
 `CT-XX` (Caso de Teste número XX)
@@ -307,29 +318,39 @@ Descreva os tipos de teste utilizados: unitário, integração, sistema, aceita�
 
 | ID | Requisito relacionado | Descrição / Cenário | Pré-condições | Passos | Resultado esperado | Status |
 |---|---|---|---|---|---|---|
-| CT-01 | RF-01 | Login com credenciais válidas | Usuário cadastrado | 1. Acessar login 2. Inserir e-mail/senha válidos 3. Submeter | Usuário autenticado e redirecionado | A executar |
-| CT-02 | RF-01 | Login com senha inválida | Usuário cadastrado | 1. Acessar login 2. Inserir senha incorreta 3. Submeter | Mensagem de erro exibida | A executar |
-| CT-03 | | | | | | |
+| CT-01 | RF-02 | Soma de dois números positivos | Aplicação em execução | 1. Selecionar "Somar" 2. Informar 5 e 3 | Resultado exibido: 8 | A executar |
+| CT-02 | RF-03 | Subtração resultando em número negativo | Aplicação em execução | 1. Selecionar "Subtrair" 2. Informar 3 e 5 | Resultado exibido: -2 | A executar |
+| CT-03 | RF-04 | Multiplicação por zero | Aplicação em execução | 1. Selecionar "Multiplicar" 2. Informar 7 e 0 | Resultado exibido: 0 | A executar |
+| CT-04 | RF-05, RN-02 | Divisão por zero | Aplicação em execução | 1. Selecionar "Dividir" 2. Informar 10 e 0 | Mensagem de erro específica, sem crash | A executar |
+| CT-05 | RF-05 | Divisão com resultado decimal | Aplicação em execução | 1. Selecionar "Dividir" 2. Informar 10 e 3 | Resultado exibido com casas decimais completas (ex: 3.3333...) | A executar |
+| CT-06 | RN-01 | Operação com número muito grande (verificar ausência de limite) | Aplicação em execução | 1. Selecionar "Somar" 2. Informar valores muito grandes | Resultado exibido sem truncamento artificial (respeitando o tipo de dado) | A executar |
+| CT-07 | RF-01, RN-03 | Entrada de opção de menu inválida | Aplicação em execução | 1. Digitar "9" no menu | Mensagem de erro e reexibição do menu | A executar |
+| CT-08 | RF-02 a RF-05 | Entrada não numérica em operando | Aplicação em execução | 1. Selecionar qualquer operação 2. Digitar "abc" como número | Mensagem de erro específica e nova solicitação de entrada | A executar |
+| CT-09 | RF-06 | Verificação de gravação no histórico | Operação concluída com sucesso | 1. Realizar uma soma 2. Verificar arquivo de histórico | Nova linha registrada com dados corretos | A executar |
+| CT-10 | RF-07 | Consulta de histórico vazio (primeira execução) | Arquivo de histórico inexistente | 1. Selecionar "Ver histórico" antes de qualquer operação | Mensagem informando que não há histórico | A executar |
+| CT-11 | RF-09 | Encerramento da aplicação | Aplicação em execução | 1. Selecionar opção "Sair" | Aplicação encerra sem erros | A executar |
 
 ---
 
 ## 8. Matriz de Rastreabilidade (Requisitos x Testes x Código-fonte)
 
-> Objetivo: garantir que todo requisito tenha teste(s) associado(s) e implementação identificável no código-fonte, permitindo análise de cobertura e impacto de mudanças.
-
 | Requisito (RF/RNF/RN) | Descrição resumida | Caso(s) de Teste | Arquivo(s) / Módulo de código | Status de implementação | Status de teste |
 |---|---|---|---|---|---|
-| RF-01 | Autenticação de usuário | CT-01, CT-02 | `src/api/auth/login.ts` | Concluído | Aprovado |
-| RF-02 | Cadastro de usuário | CT-03 | `src/api/auth/register.ts` | Em desenvolvimento | Pendente |
-| RNF-01 | Tempo de resposta ≤ 2s | CT-XX | `src/infra/cache/*` | Pendente | Pendente |
-| RNF-L02 | Registro de consentimento (LGPD) | CT-XX | `src/domain/consent/*` | Pendente | Pendente |
-| RNF-L05 | Criptografia em trânsito/repouso (LGPD) | CT-XX | `src/infra/security/*` | Em desenvolvimento | Pendente |
-| RN-01 | Regras de senha | CT-01 | `src/domain/user/password.ts` | Concluído | Aprovado |
+| RF-01 | Exibição do menu | CT-07 | `Main.java` (método `exibirMenu`) | A implementar | Pendente |
+| RF-02 | Soma | CT-01, CT-06, CT-08 | `Main.java` (método `somar`) | A implementar | Pendente |
+| RF-03 | Subtração | CT-02, CT-08 | `Main.java` (método `subtrair`) | A implementar | Pendente |
+| RF-04 | Multiplicação | CT-03, CT-08 | `Main.java` (método `multiplicar`) | A implementar | Pendente |
+| RF-05 | Divisão | CT-04, CT-05, CT-08 | `Main.java` (método `dividir`) | A implementar | Pendente |
+| RF-06 | Registro de histórico | CT-09 | `Main.java` (método `registrarHistorico`) | A implementar | Pendente |
+| RF-07 | Consulta de histórico | CT-10 | `Main.java` (método `exibirHistorico`) | A implementar | Pendente |
+| RF-09 | Encerramento da aplicação | CT-11 | `Main.java` (método `main`) | A implementar | Pendente |
+| RNF-03 | Tolerância a falhas | CT-04, CT-07, CT-08 | `Main.java` (blocos de validação) | A implementar | Pendente |
+| RNF-05 | Corretude dos cálculos | CT-01 a CT-06 | `Main.java` (métodos de operação) | A implementar | Pendente |
+| RN-01 | Sem limite de decimais/valores | CT-05, CT-06 | `Main.java` (uso de tipo `double`) | A implementar | Pendente |
+| RN-02 | Tratamento de divisão por zero | CT-04 | `Main.java` (método `dividir`) | A implementar | Pendente |
 
 **Legenda — Status de implementação:** Não iniciado / Em desenvolvimento / Concluído / Bloqueado
 **Legenda — Status de teste:** Pendente / Em execução / Aprovado / Reprovado
-
-> Dica: esta matriz pode ser mantida em uma planilha ou ferramenta de gestão de testes (ex.: Xray, TestRail, Zephyr) e sincronizada com este documento, ou gerada automaticamente a partir de tags nos testes automatizados (ex.: `@RF-01`) e commits/PRs vinculados aos IDs dos requisitos.
 
 ---
 
@@ -337,13 +358,17 @@ Descreva os tipos de teste utilizados: unitário, integração, sistema, aceita�
 
 | Termo | Definição |
 |---|---|
-| | |
+| Monolítico | Estilo de arquitetura em que toda a aplicação é desenvolvida e implantada como uma única unidade, sem separação em serviços ou camadas independentes. |
+| Operando | Cada um dos valores numéricos sobre os quais uma operação matemática é realizada. |
+| Histórico | Registro persistente das operações realizadas pelo usuário, armazenado em arquivo. |
+| LTS (Long Term Support) | Versão de software (neste caso, do Java) com suporte estendido por um período mais longo. |
+| ADR (Architecture Decision Record) | Registro de uma decisão arquitetural relevante, incluindo contexto e justificativa. |
 
 ---
 
 ## 10. Anexos e Referências
 
-- Link para protótipos / wireframes:
-- Link para repositório de código:
-- Link para backlog / board (Jira, Trello, Azure DevOps):
-- Documentos de referência:
+- Link para protótipos / wireframes: *(não aplicável — aplicação de console)*
+- Link para repositório de código: *(a preencher)*
+- Link para backlog / board: *(não aplicável)*
+- Documentos de referência: ISO/IEC 25010 (características de qualidade de software)
