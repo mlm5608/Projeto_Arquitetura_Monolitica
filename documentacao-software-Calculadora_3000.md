@@ -37,7 +37,7 @@
 Este documento descreve os requisitos, regras de negócio, arquitetura e plano de testes de uma calculadora desenvolvida em Java, com finalidade acadêmica/didática. Destina-se ao próprio desenvolvedor e a eventuais avaliadores (professores, colegas) do projeto.
 
 ### 1.2 Descrição resumida do sistema
-Sistema **monolítico**, executado via **console (linha de comando)**, que realiza as quatro operações matemáticas básicas (soma, subtração, multiplicação e divisão). O usuário interage por meio de um **menu numerado**, e cada operação realizada é registrada em um **arquivo de histórico** (CSV/TXT) para consulta posterior.
+Sistema **monolítico**, executado via **console (linha de comando)**, que realiza operações matemáticas básicas — soma, subtração, multiplicação e divisão (com opção de divisão com resto ou sem resto) — além de **potenciação** e **radiciação**. O usuário interage por meio de um **menu numerado**, e cada operação realizada é registrada em um **arquivo de histórico** (CSV/TXT) para consulta posterior.
 
 ### 1.3 Stakeholders
 
@@ -56,13 +56,15 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 - Servir como material de estudo/portfólio didático.
 
 ### 2.2 Dentro do escopo (In Scope)
-- Operações básicas: soma, subtração, multiplicação e divisão.
+- Operações básicas: soma, subtração, multiplicação e divisão (com opção de divisão **com resto** ou **sem resto**).
+- Potenciação (base elevada a um expoente).
+- Radiciação (raiz de índice n de um número).
 - Interface via console com menu numerado.
 - Persistência do histórico de operações em arquivo (CSV/TXT).
 - Tratamento robusto de erros de entrada e de cálculo.
 
 ### 2.3 Fora do escopo (Out of Scope)
-- Operações científicas (trigonometria, logaritmo, potência, raiz).
+- Demais operações científicas (trigonometria, logaritmo etc.).
 - Operações financeiras (juros, amortização, conversão de moeda).
 - Interface gráfica (Desktop/Web) ou API REST.
 - Autenticação de usuários ou multiusuário.
@@ -88,6 +90,7 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 | R-01 | Ausência de testes automatizados pode deixar passar regressões ao alterar o código | Média | Médio | Elaborar roteiro de testes manuais (seção 7) e executá-lo a cada alteração relevante |
 | R-02 | Falta de limite de casas decimais/valores pode gerar saídas com muitas casas decimais ou overflow em tipos numéricos | Média | Baixo | Utilizar tipo `double` (ou `BigDecimal`, se necessário) e documentar o comportamento esperado |
 | R-03 | Concentração de todo o código na classe `Main` pode dificultar manutenção futura | Alta (é decisão consciente do escopo) | Baixo (aceito para fins didáticos) | Nenhuma — decisão de escopo intencional |
+| R-04 | Radiciação de número negativo com índice par não possui resultado real (resultado seria número complexo) | Média | Baixo | Sistema deve identificar o caso e exibir mensagem de erro específica, sem tentar calcular |
 
 ### 2.7 Entregáveis
 - Código-fonte da calculadora (`Main.java`).
@@ -107,15 +110,17 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 
 | ID | Descrição | Prioridade | Origem / Solicitante | Status |
 |---|---|---|---|---|
-| RF-01 | O sistema deve exibir um menu numerado com as opções disponíveis (Somar, Subtrair, Multiplicar, Dividir, Ver histórico, Sair). | Alta | Autor | A implementar |
+| RF-01 | O sistema deve exibir um menu numerado com as opções disponíveis (Somar, Subtrair, Multiplicar, Dividir, Potenciação, Radiciação, Ver histórico, Sair). | Alta | Autor | A implementar |
 | RF-02 | O sistema deve permitir ao usuário realizar a operação de **soma** entre dois números. | Alta | Autor | A implementar |
 | RF-03 | O sistema deve permitir ao usuário realizar a operação de **subtração** entre dois números. | Alta | Autor | A implementar |
 | RF-04 | O sistema deve permitir ao usuário realizar a operação de **multiplicação** entre dois números. | Alta | Autor | A implementar |
-| RF-05 | O sistema deve permitir ao usuário realizar a operação de **divisão** entre dois números. | Alta | Autor | A implementar |
+| RF-05 | O sistema deve permitir ao usuário realizar a operação de **divisão** entre dois números, com a opção de escolher entre **divisão com resto** (quociente e resto, para números inteiros) ou **divisão sem resto** (resultado decimal exato). | Alta | Autor | A implementar |
 | RF-06 | O sistema deve registrar cada operação realizada (operandos, operação e resultado) em um arquivo de histórico (CSV/TXT). | Alta | Autor | A implementar |
 | RF-07 | O sistema deve permitir ao usuário consultar o histórico de operações realizadas na sessão atual e/ou em sessões anteriores. | Média | Autor | A implementar |
 | RF-08 | O sistema deve retornar ao menu principal após a conclusão de cada operação, até que o usuário escolha encerrar. | Alta | Autor | A implementar |
 | RF-09 | O sistema deve permitir o encerramento controlado da aplicação a partir do menu. | Alta | Autor | A implementar |
+| RF-10 | O sistema deve permitir ao usuário realizar a operação de **potenciação**, informando a base e o expoente. | Alta | Autor | A implementar |
+| RF-11 | O sistema deve permitir ao usuário realizar a operação de **radiciação**, informando o radicando e o índice da raiz. | Alta | Autor | A implementar |
 
 ### 3.2 Detalhamento de Requisitos
 
@@ -135,7 +140,7 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
   - [ ] Entrada inválida não derruba a aplicação e reexibe o menu.
 - **Requisitos relacionados:** RNF-04 (usabilidade), RN-03
 
-#### RF-02 a RF-05 — Operações matemáticas (soma, subtração, multiplicação, divisão)
+#### RF-02 a RF-04 — Operações matemáticas básicas (soma, subtração, multiplicação)
 - **Descrição:** O sistema deve solicitar dois números ao usuário e executar a operação escolhida, exibindo o resultado no console.
 - **Ator(es):** Usuário
 - **Pré-condições:** Usuário selecionou uma operação válida no menu.
@@ -147,13 +152,74 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
   5. Sistema registra a operação no histórico (RF-06).
 - **Fluxos alternativos / exceções:**
   - Entrada não numérica → sistema exibe mensagem de erro específica e solicita nova entrada.
-  - Divisão por zero (RF-05) → sistema exibe mensagem de erro específica, sem interromper a aplicação.
 - **Pós-condições:** Resultado exibido e operação registrada no histórico.
 - **Critérios de aceite:**
   - [ ] Cada operação retorna o resultado matematicamente correto.
-  - [ ] Divisão por zero é tratada com mensagem clara, sem crash da aplicação.
   - [ ] Entradas não numéricas são rejeitadas com mensagem clara.
+- **Requisitos relacionados:** RNF-05 (confiabilidade), RN-01
+
+#### RF-05 — Divisão (com resto ou sem resto)
+- **Descrição:** O sistema deve solicitar dois números (dividendo e divisor) e, antes de calcular, perguntar ao usuário se deseja **divisão com resto** (exibindo quociente e resto, tratando os números como inteiros) ou **divisão sem resto** (exibindo o resultado decimal exato da divisão).
+- **Ator(es):** Usuário
+- **Pré-condições:** Usuário selecionou a opção "Dividir" no menu.
+- **Fluxo principal:**
+  1. Sistema solicita o dividendo.
+  2. Sistema solicita o divisor.
+  3. Sistema pergunta se a divisão deve ser "com resto" ou "sem resto".
+  4. Caso "sem resto": sistema calcula e exibe o resultado decimal completo (ex.: 10 ÷ 3 = 3.3333...).
+  5. Caso "com resto": sistema calcula e exibe o quociente e o resto separadamente (ex.: 10 ÷ 3 → quociente 3, resto 1).
+  6. Sistema registra a operação no histórico (RF-06), incluindo o modo escolhido.
+- **Fluxos alternativos / exceções:**
+  - Divisor igual a zero → sistema exibe mensagem de erro específica ("divisão por zero não é permitida"), sem interromper a aplicação, em ambos os modos.
+  - Entrada não numérica → sistema exibe mensagem de erro específica e solicita nova entrada.
+  - Opção de modo (com/sem resto) inválida → sistema solicita nova escolha.
+- **Pós-condições:** Resultado (decimal, ou quociente + resto) exibido e operação registrada no histórico.
+- **Critérios de aceite:**
+  - [ ] Divisão "sem resto" retorna resultado decimal correto.
+  - [ ] Divisão "com resto" retorna quociente e resto corretos.
+  - [ ] Divisão por zero é tratada com mensagem clara em ambos os modos, sem crash da aplicação.
 - **Requisitos relacionados:** RNF-05 (confiabilidade), RN-01, RN-02
+
+#### RF-10 — Potenciação
+- **Descrição:** O sistema deve solicitar a base e o expoente e calcular o resultado da base elevada ao expoente informado.
+- **Ator(es):** Usuário
+- **Pré-condições:** Usuário selecionou a opção "Potenciação" no menu.
+- **Fluxo principal:**
+  1. Sistema solicita a base.
+  2. Sistema solicita o expoente.
+  3. Sistema calcula a base elevada ao expoente.
+  4. Sistema exibe o resultado.
+  5. Sistema registra a operação no histórico (RF-06).
+- **Fluxos alternativos / exceções:**
+  - Entrada não numérica → sistema exibe mensagem de erro específica e solicita nova entrada.
+  - Expoente negativo → sistema calcula normalmente (resultado fracionário, ex.: 2⁻¹ = 0.5).
+  - Base 0 e expoente negativo (indeterminação matemática) → sistema exibe mensagem de erro específica.
+- **Pós-condições:** Resultado exibido e operação registrada no histórico.
+- **Critérios de aceite:**
+  - [ ] Potenciação com expoente positivo, negativo e zero retorna resultados corretos.
+  - [ ] Caso indeterminado (0 elevado a expoente negativo) é tratado com mensagem clara.
+- **Requisitos relacionados:** RNF-05 (confiabilidade), RN-01
+
+#### RF-11 — Radiciação
+- **Descrição:** O sistema deve solicitar o radicando e o índice da raiz e calcular o resultado da raiz de índice n do radicando informado.
+- **Ator(es):** Usuário
+- **Pré-condições:** Usuário selecionou a opção "Radiciação" no menu.
+- **Fluxo principal:**
+  1. Sistema solicita o radicando.
+  2. Sistema solicita o índice da raiz (ex.: 2 para raiz quadrada, 3 para raiz cúbica).
+  3. Sistema calcula a raiz de índice n do radicando.
+  4. Sistema exibe o resultado.
+  5. Sistema registra a operação no histórico (RF-06).
+- **Fluxos alternativos / exceções:**
+  - Entrada não numérica → sistema exibe mensagem de erro específica e solicita nova entrada.
+  - Radicando negativo com índice par (ex.: raiz quadrada de -4) → resultado não é um número real; sistema exibe mensagem de erro específica, sem tentar calcular (ver risco R-04).
+  - Índice igual a zero → operação matematicamente indefinida; sistema exibe mensagem de erro específica.
+- **Pós-condições:** Resultado exibido e operação registrada no histórico.
+- **Critérios de aceite:**
+  - [ ] Raiz quadrada e cúbica de números positivos retornam resultados corretos.
+  - [ ] Radicando negativo com índice par é tratado com mensagem de erro clara, sem crash da aplicação.
+  - [ ] Índice zero é tratado com mensagem de erro clara.
+- **Requisitos relacionados:** RNF-05 (confiabilidade), RN-01, RN-04
 
 #### RF-06 — Registro de histórico em arquivo
 - **Descrição:** Cada operação concluída deve ser gravada em um arquivo (CSV ou TXT), contendo operandos, tipo de operação, resultado e data/hora.
@@ -230,7 +296,9 @@ Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: 
 |---|---|---|---|
 | RN-01 | Não há limite de casas decimais nem de valor máximo/mínimo para os operandos ou resultados — o sistema deve aceitar e exibir os valores conforme a precisão nativa do tipo numérico utilizado. | Autor | RF-02, RF-03, RF-04, RF-05, RNF-05 |
 | RN-02 | A divisão por zero não é uma operação matemática válida; o sistema deve identificá-la e informar o usuário com mensagem específica, sem interromper a aplicação. | Autor | RF-05, RNF-03 |
-| RN-03 | Apenas opções presentes no menu (1 a 6) são aceitas; qualquer outra entrada deve ser rejeitada com nova solicitação. | Autor | RF-01 |
+| RN-03 | Apenas opções presentes no menu são aceitas; qualquer outra entrada deve ser rejeitada com nova solicitação. | Autor | RF-01 |
+| RN-04 | Radiciação de radicando negativo com índice par não possui resultado real; o sistema deve identificar essa condição e informar o usuário, sem realizar o cálculo. | Autor | RF-11 |
+| RN-05 | Índice de raiz igual a zero é matematicamente indefinido; o sistema deve rejeitar essa entrada com mensagem específica. | Autor | RF-11 |
 
 ---
 
@@ -241,14 +309,6 @@ Arquitetura **monolítica simples**, sem separação em camadas (model/service/v
 
 ### 6.2 Diagrama de arquitetura (visão geral)
 
-```mermaid
-flowchart TD
-    A[Usuário via Console] --> B[Classe Main]
-    B --> C[Métodos de Operação: soma, subtração, multiplicação, divisão]
-    B --> D[Método de Leitura de Entrada]
-    B --> E[Método de Gravação/Leitura de Histórico]
-    E --> F[(Arquivo CSV/TXT)]
-```
 
 ### 6.3 Componentes / Módulos
 
@@ -272,7 +332,10 @@ Não há modelo de dados relacional (sem banco de dados). O único "dado persist
 ```
 data_hora,operacao,operando1,operando2,resultado
 2026-09-11 14:32:10,SOMA,5,3,8
-2026-09-11 14:33:02,DIVISAO,10,0,ERRO: divisão por zero
+2026-09-11 14:33:02,DIVISAO_SEM_RESTO,10,0,ERRO: divisão por zero
+2026-09-11 14:34:15,DIVISAO_COM_RESTO,10,3,quociente=3;resto=1
+2026-09-11 14:35:40,POTENCIACAO,2,10,1024
+2026-09-11 14:36:20,RADICIACAO,9,2,3
 ```
 
 ### 6.6 Decisões de arquitetura (ADR resumido)
@@ -290,7 +353,7 @@ data_hora,operacao,operando1,operando2,resultado
 /src
   Main.java
 /historico
-  historico.csv
+  historico.txt
 /docs
   Documentacao_Calculadora_Java.md
 ```
@@ -321,14 +384,23 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 | CT-01 | RF-02 | Soma de dois números positivos | Aplicação em execução | 1. Selecionar "Somar" 2. Informar 5 e 3 | Resultado exibido: 8 | A executar |
 | CT-02 | RF-03 | Subtração resultando em número negativo | Aplicação em execução | 1. Selecionar "Subtrair" 2. Informar 3 e 5 | Resultado exibido: -2 | A executar |
 | CT-03 | RF-04 | Multiplicação por zero | Aplicação em execução | 1. Selecionar "Multiplicar" 2. Informar 7 e 0 | Resultado exibido: 0 | A executar |
-| CT-04 | RF-05, RN-02 | Divisão por zero | Aplicação em execução | 1. Selecionar "Dividir" 2. Informar 10 e 0 | Mensagem de erro específica, sem crash | A executar |
-| CT-05 | RF-05 | Divisão com resultado decimal | Aplicação em execução | 1. Selecionar "Dividir" 2. Informar 10 e 3 | Resultado exibido com casas decimais completas (ex: 3.3333...) | A executar |
+| CT-04 | RF-05, RN-02 | Divisão por zero (modo sem resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "sem resto" 3. Informar 10 e 0 | Mensagem de erro específica, sem crash | A executar |
+| CT-04b | RF-05, RN-02 | Divisão por zero (modo com resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "com resto" 3. Informar 10 e 0 | Mensagem de erro específica, sem crash | A executar |
+| CT-05 | RF-05 | Divisão sem resto com resultado decimal | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "sem resto" 3. Informar 10 e 3 | Resultado exibido com casas decimais completas (ex: 3.3333...) | A executar |
+| CT-05b | RF-05 | Divisão com resto (quociente e resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "com resto" 3. Informar 10 e 3 | Quociente 3 e resto 1 exibidos | A executar |
 | CT-06 | RN-01 | Operação com número muito grande (verificar ausência de limite) | Aplicação em execução | 1. Selecionar "Somar" 2. Informar valores muito grandes | Resultado exibido sem truncamento artificial (respeitando o tipo de dado) | A executar |
-| CT-07 | RF-01, RN-03 | Entrada de opção de menu inválida | Aplicação em execução | 1. Digitar "9" no menu | Mensagem de erro e reexibição do menu | A executar |
-| CT-08 | RF-02 a RF-05 | Entrada não numérica em operando | Aplicação em execução | 1. Selecionar qualquer operação 2. Digitar "abc" como número | Mensagem de erro específica e nova solicitação de entrada | A executar |
+| CT-07 | RF-01, RN-03 | Entrada de opção de menu inválida | Aplicação em execução | 1. Digitar opção inexistente no menu | Mensagem de erro e reexibição do menu | A executar |
+| CT-08 | RF-02 a RF-05, RF-10, RF-11 | Entrada não numérica em operando | Aplicação em execução | 1. Selecionar qualquer operação 2. Digitar "abc" como número | Mensagem de erro específica e nova solicitação de entrada | A executar |
 | CT-09 | RF-06 | Verificação de gravação no histórico | Operação concluída com sucesso | 1. Realizar uma soma 2. Verificar arquivo de histórico | Nova linha registrada com dados corretos | A executar |
 | CT-10 | RF-07 | Consulta de histórico vazio (primeira execução) | Arquivo de histórico inexistente | 1. Selecionar "Ver histórico" antes de qualquer operação | Mensagem informando que não há histórico | A executar |
 | CT-11 | RF-09 | Encerramento da aplicação | Aplicação em execução | 1. Selecionar opção "Sair" | Aplicação encerra sem erros | A executar |
+| CT-12 | RF-10 | Potenciação com expoente positivo | Aplicação em execução | 1. Selecionar "Potenciação" 2. Informar base 2 e expoente 10 | Resultado exibido: 1024 | A executar |
+| CT-13 | RF-10 | Potenciação com expoente negativo | Aplicação em execução | 1. Selecionar "Potenciação" 2. Informar base 2 e expoente -1 | Resultado exibido: 0.5 | A executar |
+| CT-14 | RF-10 | Potenciação com expoente zero | Aplicação em execução | 1. Selecionar "Potenciação" 2. Informar base 5 e expoente 0 | Resultado exibido: 1 | A executar |
+| CT-15 | RF-11 | Radiciação com raiz quadrada exata | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar radicando 9 e índice 2 | Resultado exibido: 3 | A executar |
+| CT-16 | RF-11 | Radiciação com raiz cúbica | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar radicando 27 e índice 3 | Resultado exibido: 3 | A executar |
+| CT-17 | RF-11, RN-04 | Radiciação de radicando negativo com índice par | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar radicando -4 e índice 2 | Mensagem de erro específica, sem crash | A executar |
+| CT-18 | RF-11, RN-05 | Radiciação com índice zero | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar índice 0 | Mensagem de erro específica, sem crash | A executar |
 
 ---
 
@@ -340,14 +412,18 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 | RF-02 | Soma | CT-01, CT-06, CT-08 | `Main.java` (método `somar`) | A implementar | Pendente |
 | RF-03 | Subtração | CT-02, CT-08 | `Main.java` (método `subtrair`) | A implementar | Pendente |
 | RF-04 | Multiplicação | CT-03, CT-08 | `Main.java` (método `multiplicar`) | A implementar | Pendente |
-| RF-05 | Divisão | CT-04, CT-05, CT-08 | `Main.java` (método `dividir`) | A implementar | Pendente |
+| RF-05 | Divisão (com/sem resto) | CT-04, CT-04b, CT-05, CT-05b, CT-08 | `Main.java` (método `dividir`) | A implementar | Pendente |
 | RF-06 | Registro de histórico | CT-09 | `Main.java` (método `registrarHistorico`) | A implementar | Pendente |
 | RF-07 | Consulta de histórico | CT-10 | `Main.java` (método `exibirHistorico`) | A implementar | Pendente |
 | RF-09 | Encerramento da aplicação | CT-11 | `Main.java` (método `main`) | A implementar | Pendente |
-| RNF-03 | Tolerância a falhas | CT-04, CT-07, CT-08 | `Main.java` (blocos de validação) | A implementar | Pendente |
-| RNF-05 | Corretude dos cálculos | CT-01 a CT-06 | `Main.java` (métodos de operação) | A implementar | Pendente |
+| RF-10 | Potenciação | CT-12, CT-13, CT-14, CT-08 | `Main.java` (método `potenciar`) | A implementar | Pendente |
+| RF-11 | Radiciação | CT-15, CT-16, CT-17, CT-18, CT-08 | `Main.java` (método `calcularRaiz`) | A implementar | Pendente |
+| RNF-03 | Tolerância a falhas | CT-04, CT-04b, CT-07, CT-08, CT-17, CT-18 | `Main.java` (blocos de validação) | A implementar | Pendente |
+| RNF-05 | Corretude dos cálculos | CT-01 a CT-06, CT-12 a CT-16 | `Main.java` (métodos de operação) | A implementar | Pendente |
 | RN-01 | Sem limite de decimais/valores | CT-05, CT-06 | `Main.java` (uso de tipo `double`) | A implementar | Pendente |
-| RN-02 | Tratamento de divisão por zero | CT-04 | `Main.java` (método `dividir`) | A implementar | Pendente |
+| RN-02 | Tratamento de divisão por zero | CT-04, CT-04b | `Main.java` (método `dividir`) | A implementar | Pendente |
+| RN-04 | Radiciação de negativo com índice par | CT-17 | `Main.java` (método `calcularRaiz`) | A implementar | Pendente |
+| RN-05 | Índice de raiz igual a zero | CT-18 | `Main.java` (método `calcularRaiz`) | A implementar | Pendente |
 
 **Legenda — Status de implementação:** Não iniciado / Em desenvolvimento / Concluído / Bloqueado
 **Legenda — Status de teste:** Pendente / Em execução / Aprovado / Reprovado
@@ -363,6 +439,10 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 | Histórico | Registro persistente das operações realizadas pelo usuário, armazenado em arquivo. |
 | LTS (Long Term Support) | Versão de software (neste caso, do Java) com suporte estendido por um período mais longo. |
 | ADR (Architecture Decision Record) | Registro de uma decisão arquitetural relevante, incluindo contexto e justificativa. |
+| Potenciação | Operação matemática em que um número (base) é multiplicado por si mesmo tantas vezes quanto indicado pelo expoente. |
+| Radiciação | Operação matemática inversa à potenciação, que determina qual número, elevado ao índice informado, resulta no radicando. |
+| Radicando | Valor sobre o qual se calcula a raiz na operação de radiciação. |
+| Quociente e resto | Na divisão de números inteiros, o quociente é o resultado inteiro da divisão e o resto é o valor restante não divisível. |
 
 ---
 
