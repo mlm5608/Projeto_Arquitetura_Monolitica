@@ -12,7 +12,7 @@
 
 | Versão | Data | Autor | Descrição da alteração |
 |---|---|---|---|
-| 1.0 | 11/09/2026 | Bianca Alves, Beatriz Feitosa, Felipe Penha, Henrique Gonzalez, Matheus Sivero, Miguel Moreira | Criação do documento a partir de levantamento de requisitos |
+| 1.0 | 11/09/2026 | Miguel Moreira | Criação do documento a partir de levantamento de requisitos |
 
 ---
 
