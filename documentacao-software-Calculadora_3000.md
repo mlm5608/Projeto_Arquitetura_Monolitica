@@ -450,7 +450,11 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 
 ---
 
-## 10. Anexos e Referências
+## 10.Diagramas 
+# Diagrama de classe
+<img width="759" height="536" alt="diagrama de classes-Página-4 drawio" src="https://github.com/user-attachments/assets/9e836d0f-b5f2-4568-b522-0e1ee1821601" />
+
+## 11. Anexos e Referências
 
 - Link para protótipos / wireframes: *(não aplicável — aplicação de console)*
 - Link para repositório de código: https://github.com/mlm5608/Projeto_Arquitetura_Monolitica
