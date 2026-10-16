@@ -34,10 +34,10 @@
 ## 1. Visão Geral
 
 ### 1.1 Propósito do documento
-Este documento descreve os requisitos, regras de negócio, arquitetura e plano de testes de uma calculadora desenvolvida em Java, com finalidade acadêmica/didática. Destina-se ao próprio desenvolvedor e a eventuais avaliadores (professores, colegas) do projeto.
+Este documento descreve os requisitos, regras de negócio, arquitetura e plano de testes de uma calculadora desenvolvida em Java, com finalidade acadêmica/didática. Destina-se ao próprio desenvolve[...] 
 
 ### 1.2 Descrição resumida do sistema
-Sistema **monolítico**, executado via **console (linha de comando)**, que realiza operações matemáticas básicas — soma, subtração, multiplicação e divisão (com opção de divisão com resto ou sem resto) — além de **potenciação** e **radiciação**. O usuário interage por meio de um **menu numerado**, e cada operação realizada é registrada em um **arquivo de histórico** (CSV/TXT) para consulta posterior.
+Sistema **monolítico**, executado via **console (linha de comando)**, que realiza operações matemáticas básicas — soma, subtração, multiplicação e divisão (com opção de divisão com [...] 
 
 ### 1.3 Stakeholders
 
@@ -92,10 +92,10 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 
 | ID | Risco | Probabilidade | Impacto | Mitigação |
 |---|---|---|---|---|
-| R-01 | Ausência de testes automatizados pode deixar passar regressões ao alterar o código | Média | Médio | Elaborar roteiro de testes manuais (seção 7) e executá-lo a cada alteração relevante |
-| R-02 | Falta de limite de casas decimais/valores pode gerar saídas com muitas casas decimais ou overflow em tipos numéricos | Média | Baixo | Utilizar tipo `double` (ou `BigDecimal`, se necessário) e documentar o comportamento esperado |
-| R-03 | Concentração de todo o código na classe `Main` pode dificultar manutenção futura | Alta (é decisão consciente do escopo) | Baixo (aceito para fins didáticos) | Nenhuma — decisão de escopo intencional |
-| R-04 | Radiciação de número negativo com índice par não possui resultado real (resultado seria número complexo) | Média | Baixo | Sistema deve identificar o caso e exibir mensagem de erro específica, sem tentar calcular |
+| R-01 | Ausência de testes automatizados pode deixar passar regressões ao alterar o código | Média | Médio | Elaborar roteiro de testes manuais (seção 7) e executá-lo a cada alteração r[...]
+| R-02 | Falta de limite de casas decimais/valores pode gerar saídas com muitas casas decimais ou overflow em tipos numéricos | Média | Baixo | Utilizar tipo `double` (ou `BigDecimal`, se neces[...]
+| R-03 | Concentração de todo o código na classe `Main` pode dificultar manutenção futura | Alta (é decisão consciente do escopo) | Baixo (aceito para fins didáticos) | Nenhuma — decisã[...]
+| R-04 | Radiciação de número negativo com índice par não possui resultado real (resultado seria número complexo) | Média | Baixo | Sistema deve identificar o caso e exibir mensagem de erro[...]
 
 ### 2.7 Entregáveis
 - Código-fonte da calculadora (`Main.java`).
@@ -115,11 +115,11 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 
 | ID | Descrição | Prioridade | Origem / Solicitante | Status |
 |---|---|---|---|---|
-| RF-01 | O sistema deve exibir um menu numerado com as opções disponíveis (Somar, Subtrair, Multiplicar, Dividir, Potenciação, Radiciação, Ver histórico, Sair). | Alta | Autor | A implementar |
+| RF-01 | O sistema deve exibir um menu numerado com as opções disponíveis (Somar, Subtrair, Multiplicar, Dividir, Potenciação, Radiciação, Ver histórico, Sair). | Alta | Autor | A implem[...] 
 | RF-02 | O sistema deve permitir ao usuário realizar a operação de **soma** entre dois números. | Alta | Autor | A implementar |
 | RF-03 | O sistema deve permitir ao usuário realizar a operação de **subtração** entre dois números. | Alta | Autor | A implementar |
 | RF-04 | O sistema deve permitir ao usuário realizar a operação de **multiplicação** entre dois números. | Alta | Autor | A implementar |
-| RF-05 | O sistema deve permitir ao usuário realizar a operação de **divisão** entre dois números, com a opção de escolher entre **divisão com resto** (quociente e resto, para números inteiros) ou **divisão sem resto** (resultado decimal exato). | Alta | Autor | A implementar |
+| RF-05 | O sistema deve permitir ao usuário realizar a operação de **divisão** entre dois números, com a opção de escolher entre **divisão com resto** (quociente e resto, para números i[...]
 | RF-06 | O sistema deve registrar cada operação realizada (operandos, operação e resultado) em um arquivo de histórico (TXT). | Baixa | Autor | A implementar |
 | RF-07 | O sistema deve permitir ao usuário consultar o histórico de operações realizadas na sessão atual e/ou em sessões anteriores. | Baixa | Autor | A implementar |
 | RF-08 | O sistema deve retornar ao menu principal após a conclusão de cada operação, até que o usuário escolha encerrar. | Alta | Autor | A implementar |
@@ -164,7 +164,7 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 - **Requisitos relacionados:** RNF-05 (confiabilidade), RN-01
 
 #### RF-05 — Divisão (com resto ou sem resto)
-- **Descrição:** O sistema deve solicitar dois números (dividendo e divisor) e, antes de calcular, perguntar ao usuário se deseja **divisão com resto** (exibindo quociente e resto, tratando os números como inteiros) ou **divisão sem resto** (exibindo o resultado decimal exato da divisão).
+- **Descrição:** O sistema deve solicitar dois números (dividendo e divisor) e, antes de calcular, perguntar ao usuário se deseja **divisão com resto** (exibindo quociente e resto, tratando [...]
 - **Ator(es):** Usuário
 - **Pré-condições:** Usuário selecionou a opção "Dividir" no menu.
 - **Fluxo principal:**
@@ -269,20 +269,20 @@ Sistema **monolítico**, executado via **console (linha de comando)**, que reali
 
 | ID | Característica ISO 25010 | Subcaracterística | Descrição | Critério de aceite / Métrica | Prioridade |
 |---|---|---|---|---|---|
-| RNF-01 | Eficiência de Desempenho | Comportamento temporal | O sistema deve responder às operações de forma imediata (não há processamento pesado). | Resposta perceptivelmente instantânea (< 1s) | Baixa |
+| RNF-01 | Eficiência de Desempenho | Comportamento temporal | O sistema deve responder às operações de forma imediata (não há processamento pesado). | Resposta perceptivelmente instantâne[...] 
 | RNF-02 | Segurança | — | Não se aplica de forma relevante: sistema não trata dados pessoais nem sensíveis. | N/A | N/A |
-| RNF-03 | Confiabilidade | Tolerância a falhas | O sistema não deve encerrar abruptamente diante de entradas inválidas ou divisão por zero. | Nenhum crash em testes de entrada inválida | Alta |
+| RNF-03 | Confiabilidade | Tolerância a falhas | O sistema não deve encerrar abruptamente diante de entradas inválidas ou divisão por zero. | Nenhum crash em testes de entrada inválida | Al[...] 
 | RNF-04 | Usabilidade | Operabilidade | O menu deve ser claro o suficiente para uso sem necessidade de manual. | Usuário consegue operar sem consulta externa | Média |
-| RNF-05 | Confiabilidade | Corretude | Os resultados das operações devem ser matematicamente corretos, sem limite artificial de casas decimais ou de valor (ver RN-01). | 100% de acerto nos casos de teste da seção 7 | Alta |
-| RNF-06 | Manutenibilidade | Analisabilidade | Ainda que concentrado na classe `Main`, o código deve ser organizado com métodos bem nomeados e comentários, facilitando leitura. | Revisão de código / clareza dos métodos | Média |
-| RNF-07 | Compatibilidade | Interoperabilidade | O arquivo de histórico deve ser gerado em formato aberto (TXT) legível por editores de texto e planilhas. | Arquivo abre corretamente em editor de texto | Média |
-| RNF-08 | Portabilidade | Adaptabilidade | O sistema deve rodar em qualquer ambiente com JDK compatível instalado (Windows, Linux, macOS). | Execução bem-sucedida via `javac`/`java` nos 3 sistemas operacionais | Baixa |
+| RNF-05 | Confiabilidade | Corretude | Os resultados das operações devem ser matematicamente corretos, sem limite artificial de casas decimais ou de valor (ver RN-01). | 100% de acerto nos cas[...] 
+| RNF-06 | Manutenibilidade | Analisabilidade | Ainda que concentrado na classe `Main`, o código deve ser organizado com métodos bem nomeados e comentários, facilitando leitura. | Revisão de [...]
+| RNF-07 | Compatibilidade | Interoperabilidade | O arquivo de histórico deve ser gerado em formato aberto (TXT) legível por editores de texto e planilhas. | Arquivo abre corretamente em editor[...] 
+| RNF-08 | Portabilidade | Adaptabilidade | O sistema deve rodar em qualquer ambiente com JDK compatível instalado (Windows, Linux, macOS). | Execução bem-sucedida via `javac`/`java` nos 3 sis[...] 
 
-> **Nota:** a versão do Java (8, 11, 17 ou 21) ainda não foi definida. Recomenda-se adotar uma versão **LTS** (11, 17 ou 21) para maior compatibilidade e suporte, mesmo em projeto acadêmico sem build tool. Essa decisão deve ser registrada assim que definida (ADR-01, seção 6.6).
+> **Nota:** a versão do Java (8, 11, 17 ou 21) ainda não foi definida. Recomenda-se adotar uma versão **LTS** (11, 17 ou 21) para maior compatibilidade e suporte, mesmo em projeto acadêmico s[...]
 
 ### 4.2 Conformidade com a LGPD (Lei nº 13.709/2018)
 
-**Não aplicável a este projeto.** A calculadora não coleta, armazena nem processa dados pessoais de titulares — o arquivo de histórico registra apenas operações matemáticas (operandos, operação, resultado, data/hora), sem qualquer dado que identifique uma pessoa física. Por esse motivo, os requisitos RNF-L01 a RNF-L10 do template original não se aplicam e foram suprimidos desta versão do documento.
+**Não aplicável a este projeto.** A calculadora não coleta, armazena nem processa dados pessoais de titulares — o arquivo de histórico registra apenas operações matemáticas (operandos, o[...] 
 
 Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: nome, e-mail, login), esta seção deve ser revisitada e os requisitos de LGPD reincorporados.
 
@@ -299,10 +299,10 @@ Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: 
 
 | ID | Descrição | Origem | Requisitos relacionados |
 |---|---|---|---|
-| RN-01 | Não há limite de casas decimais nem de valor máximo/mínimo para os operandos ou resultados — o sistema deve aceitar e exibir os valores conforme a precisão nativa do tipo numérico utilizado. | Autor | RF-02, RF-03, RF-04, RF-05, RNF-05 |
-| RN-02 | A divisão por zero não é uma operação matemática válida; o sistema deve identificá-la e informar o usuário com mensagem específica, sem interromper a aplicação. | Autor | RF-05, RNF-03 |
+| RN-01 | Não há limite de casas decimais nem de valor máximo/mínimo para os operandos ou resultados — o sistema deve aceitar e exibir os valores conforme a precisão nativa do tipo numéri[...] 
+| RN-02 | A divisão por zero não é uma operação matemática válida; o sistema deve identificá-la e informar o usuário com mensagem específica, sem interromper a aplicação. | Autor | RF[...] 
 | RN-03 | Apenas opções presentes no menu são aceitas; qualquer outra entrada deve ser rejeitada com nova solicitação. | Autor | RF-01 |
-| RN-04 | Radiciação de radicando negativo com índice par não possui resultado real; o sistema deve identificar essa condição e informar o usuário, sem realizar o cálculo. | Autor | RF-11 |
+| RN-04 | Radiciação de radicando negativo com índice par não possui resultado real; o sistema deve identificar essa condição e informar o usuário, sem realizar o cálculo. | Autor | RF-11[...]
 | RN-05 | Índice de raiz igual a zero é matematicamente indefinido; o sistema deve rejeitar essa entrada com mensagem específica. | Autor | RF-11 |
 
 ---
@@ -310,7 +310,7 @@ Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: 
 ## 6. Projeto e Arquitetura do Software
 
 ### 6.1 Visão arquitetural
-Arquitetura **monolítica simples**, sem separação em camadas (model/service/view). Todo o código-fonte será implementado dentro de uma única classe, `Main`, contendo o método `main` e os métodos auxiliares necessários (menu, operações, leitura/escrita de arquivo). Esta é uma decisão de escopo consciente, adequada ao caráter didático do projeto.
+Arquitetura **monolítica simples**, sem separação em camadas (model/service/view). Todo o código-fonte será implementado dentro de uma única classe, `Main`, contendo o método `main` e os m[...]
 
 ### 6.2 Diagrama de arquitetura (visão geral)
 
@@ -346,10 +346,10 @@ data_hora,operacao,operando1,operando2,resultado
 
 | ID | Decisão | Contexto | Alternativas consideradas | Justificativa |
 |---|---|---|---|---|
-| ADR-01 | Definir versão do Java a ser utilizada | Versão ainda não escolhida pelo autor | Java 8, 11, 17, 21 | *(pendente — recomendação: LTS mais recente disponível no ambiente do autor)* |
+| ADR-01 | Definir versão do Java a ser utilizada | Versão ainda não escolhida pelo autor | Java 8, 11, 17, 21 | *(pendente — recomendação: LTS mais recente disponível no ambiente do auto[...] 
 | ADR-02 | Não utilizar camadas (model/service/view) | Projeto didático, escopo reduzido | Arquitetura em camadas | Simplicidade e foco no aprendizado de lógica básica |
 | ADR-03 | Não utilizar ferramenta de build (Maven/Gradle) | Projeto simples, sem dependências externas | Maven, Gradle | Não há dependências de terceiros que justifiquem a ferramenta |
-| ADR-04 | Persistência via arquivo (TXT) em vez de banco de dados | Simplicidade e caráter didático | Banco de dados relacional (ex.: SQL Server) | Evita complexidade desnecessária de configuração de banco |
+| ADR-04 | Persistência via arquivo (TXT) em vez de banco de dados | Simplicidade e caráter didático | Banco de dados relacional (ex.: SQL Server) | Evita complexidade desnecessária de config[...] 
 
 ### 6.7 Estrutura de pastas do projeto
 
@@ -370,7 +370,7 @@ Não há integrações com sistemas externos.
 ## 7. Plano e Casos de Teste
 
 ### 7.1 Estratégia de testes
-Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração relevante no código, cobrindo os fluxos principais e as exceções previstas (entrada inválida, divisão por zero, opção de menu inválida).
+Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração relevante no código, cobrindo os fluxos principais e as exceções previstas (entrada inválida, divisão por zero, [...]
 
 ### 7.2 Ambientes de teste
 
@@ -388,22 +388,22 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 | CT-01 | RF-02 | Soma de dois números positivos | Aplicação em execução | 1. Selecionar "Somar" 2. Informar 5 e 3 | Resultado exibido: 8 | A executar |
 | CT-02 | RF-03 | Subtração resultando em número negativo | Aplicação em execução | 1. Selecionar "Subtrair" 2. Informar 3 e 5 | Resultado exibido: -2 | A executar |
 | CT-03 | RF-04 | Multiplicação por zero | Aplicação em execução | 1. Selecionar "Multiplicar" 2. Informar 7 e 0 | Resultado exibido: 0 | A executar |
-| CT-04 | RF-05, RN-02 | Divisão por zero (modo sem resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "sem resto" 3. Informar 10 e 0 | Mensagem de erro específica, sem crash | A executar |
-| CT-04b | RF-05, RN-02 | Divisão por zero (modo com resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "com resto" 3. Informar 10 e 0 | Mensagem de erro específica, sem crash | A executar |
-| CT-05 | RF-05 | Divisão sem resto com resultado decimal | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "sem resto" 3. Informar 10 e 3 | Resultado exibido com casas decimais completas (ex: 3.3333...) | A executar |
-| CT-05b | RF-05 | Divisão com resto (quociente e resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "com resto" 3. Informar 10 e 3 | Quociente 3 e resto 1 exibidos | A executar |
-| CT-06 | RN-01 | Operação com número muito grande (verificar ausência de limite) | Aplicação em execução | 1. Selecionar "Somar" 2. Informar valores muito grandes | Resultado exibido sem truncamento artificial (respeitando o tipo de dado) | A executar |
+| CT-04 | RF-05, RN-02 | Divisão por zero (modo sem resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "sem resto" 3. Informar 10 e 0 | Mensagem de erro específica, sem cr[...] 
+| CT-04b | RF-05, RN-02 | Divisão por zero (modo com resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "com resto" 3. Informar 10 e 0 | Mensagem de erro específica, sem c[...] 
+| CT-05 | RF-05 | Divisão sem resto com resultado decimal | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "sem resto" 3. Informar 10 e 3 | Resultado exibido com casas decimais [...] 
+| CT-05b | RF-05 | Divisão com resto (quociente e resto) | Aplicação em execução | 1. Selecionar "Dividir" 2. Escolher "com resto" 3. Informar 10 e 3 | Quociente 3 e resto 1 exibidos | A exe[...] 
+| CT-06 | RN-01 | Operação com número muito grande (verificar ausência de limite) | Aplicação em execução | 1. Selecionar "Somar" 2. Informar valores muito grandes | Resultado exibido sem[...] 
 | CT-07 | RF-01, RN-03 | Entrada de opção de menu inválida | Aplicação em execução | 1. Digitar opção inexistente no menu | Mensagem de erro e reexibição do menu | A executar |
-| CT-08 | RF-02 a RF-05, RF-10, RF-11 | Entrada não numérica em operando | Aplicação em execução | 1. Selecionar qualquer operação 2. Digitar "abc" como número | Mensagem de erro específica e nova solicitação de entrada | A executar |
-| CT-09 | RF-06 | Verificação de gravação no histórico | Operação concluída com sucesso | 1. Realizar uma soma 2. Verificar arquivo de histórico | Nova linha registrada com dados corretos | A executar |
-| CT-10 | RF-07 | Consulta de histórico vazio (primeira execução) | Arquivo de histórico inexistente | 1. Selecionar "Ver histórico" antes de qualquer operação | Mensagem informando que não há histórico | A executar |
+| CT-08 | RF-02 a RF-05, RF-10, RF-11 | Entrada não numérica em operando | Aplicação em execução | 1. Selecionar qualquer operação 2. Digitar "abc" como número | Mensagem de erro especí[...] 
+| CT-09 | RF-06 | Verificação de gravação no histórico | Operação concluída com sucesso | 1. Realizar uma soma 2. Verificar arquivo de histórico | Nova linha registrada com dados correto[...] 
+| CT-10 | RF-07 | Consulta de histórico vazio (primeira execução) | Arquivo de histórico inexistente | 1. Selecionar "Ver histórico" antes de qualquer operação | Mensagem informando que n�[...] 
 | CT-11 | RF-09 | Encerramento da aplicação | Aplicação em execução | 1. Selecionar opção "Sair" | Aplicação encerra sem erros | A executar |
 | CT-12 | RF-10 | Potenciação com expoente positivo | Aplicação em execução | 1. Selecionar "Potenciação" 2. Informar base 2 e expoente 10 | Resultado exibido: 1024 | A executar |
 | CT-13 | RF-10 | Potenciação com expoente negativo | Aplicação em execução | 1. Selecionar "Potenciação" 2. Informar base 2 e expoente -1 | Resultado exibido: 0.5 | A executar |
 | CT-14 | RF-10 | Potenciação com expoente zero | Aplicação em execução | 1. Selecionar "Potenciação" 2. Informar base 5 e expoente 0 | Resultado exibido: 1 | A executar |
 | CT-15 | RF-11 | Radiciação com raiz quadrada exata | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar radicando 9 e índice 2 | Resultado exibido: 3 | A executar |
 | CT-16 | RF-11 | Radiciação com raiz cúbica | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar radicando 27 e índice 3 | Resultado exibido: 3 | A executar |
-| CT-17 | RF-11, RN-04 | Radiciação de radicando negativo com índice par | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar radicando -4 e índice 2 | Mensagem de erro específica, sem crash | A executar |
+| CT-17 | RF-11, RN-04 | Radiciação de radicando negativo com índice par | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar radicando -4 e índice 2 | Mensagem de erro espe[...] 
 | CT-18 | RF-11, RN-05 | Radiciação com índice zero | Aplicação em execução | 1. Selecionar "Radiciação" 2. Informar índice 0 | Mensagem de erro específica, sem crash | A executar |
 
 ---
@@ -452,10 +452,10 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 
 ## 10.Diagramas 
 ## 10.1 Diagrama de classe
-<img width="759" height="536" alt="diagrama de classes-Página-4 drawio" src="https://github.com/user-attachments/assets/9e836d0f-b5f2-4568-b522-0e1ee1821601" />
+<img alt="diagrama de classes-Página-4 drawio" src="https://github.com/user-attachments/assets/9e836d0f-b5f2-4568-b522-0e1ee1821601" style="max-width:700px;height:auto;display:block;margin:0 auto;" />
 
 ## 10.2 Diagrama de sequência
-<img width="1090" height="2050" alt="diagrama de classes-Página-5 drawio" src="https://github.com/user-attachments/assets/b7c1c926-809a-49f4-a401-29ae98cf95a5" />
+<img alt="diagrama de classes-Página-5 drawio" src="https://github.com/user-attachments/assets/b7c1c926-809a-49f4-a401-29ae98cf95a5" style="max-width:700px;max-height:1000px;height:auto;display:block;margin:0 auto;" />
 
 
 ## 11. Anexos e Referências
