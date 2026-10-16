@@ -457,6 +457,9 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 ## 10.2 Diagrama de sequência
 <img width=50% height=auto alt="Diagrama de sequência-Página-5 drawio" src="https://github.com/user-attachments/assets/39f6baaf-668b-4477-a6e2-1f3feaf33c5b" />
 
+## 10.3 Diagrama de caso de uso
+<img width=80% height=auto alt="diagrama de caso de uso drawio" src="https://github.com/user-attachments/assets/18289725-4418-47ac-80e2-a4481af93d53" />
+
 ---
 
 ## 11. Anexos e Referências
