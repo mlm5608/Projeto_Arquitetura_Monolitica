@@ -452,10 +452,10 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 
 ## 10.Diagramas 
 ## 10.1 Diagrama de classe
-<img alt="diagrama de classes-Página-4 drawio" src="https://github.com/user-attachments/assets/9e836d0f-b5f2-4568-b522-0e1ee1821601" style="max-width:700px;height:auto;display:block;margin:0 auto;" />
+<img alt="diagrama de classes-Página-4 drawio" src="https://github.com/user-attachments/assets/9e836d0f-b5f2-4568-b522-0e1ee1821601" style="width:50%;height:auto;display:block;margin:0 auto;" />
 
 ## 10.2 Diagrama de sequência
-<img width="1090" height="2049" alt="Diagrama de sequência-Página-5 drawio" src="https://github.com/user-attachments/assets/39f6baaf-668b-4477-a6e2-1f3feaf33c5b" />
+<img width=50% height=auto alt="Diagrama de sequência-Página-5 drawio" src="https://github.com/user-attachments/assets/39f6baaf-668b-4477-a6e2-1f3feaf33c5b" />
 
 ---
 
