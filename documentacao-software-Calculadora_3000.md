@@ -460,6 +460,12 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 ## 10.3 Diagrama de caso de uso
 <img width=50% height=auto alt="diagrama de caso de uso drawio (1)" src="https://github.com/user-attachments/assets/de82071c-c5b0-4fd4-9799-ecf5597582fd" />
 
+## 10.4 Diagrama de Camadas
+
+<img width=50% height=auto alt="Diagrama de Camadas da Calculadora Java" src="https://github.com/user-attachments/assets/aec5a82c-7ee5-499f-9acb-eb0eab1df7e7" />
+
+
+
 ---
 
 ## 11. Anexos e Referências
