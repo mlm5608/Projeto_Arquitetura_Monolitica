@@ -2,8 +2,8 @@
 
 | Campo | Valor |
 |---|---|
-| **Versão do documento** | 1.1 |
-| **Data** | 23/11/2026 |
+| **Versão do documento** | 1.2 |
+| **Data** | 26/11/2026 |
 | **Autor(es)** | Bianca Alves, Beatriz Feitosa, Felipe Penha, Henrique Gonzalez, Matheus Sivero, Miguel Moreira |
 | **Status** | Rascunho |
 | **Aprovado por** | *(não aplicável — projeto acadêmico)* |
@@ -13,7 +13,13 @@
 | Versão | Data | Autor | Descrição da alteração |
 |---|---|---|---|
 | 1.0 | 11/09/2026 | Miguel Moreira | Criação do documento a partir de levantamento de requisitos |
+| 1.0.1 | 25/09/2026 | Bianca Alves | Detalhamento dos requisitos funcionais e das regras de negócio |
+| 1.0.2 | 09/10/2026 | Beatriz Feitosa | Inclusão dos requisitos não funcionais com base na ISO/IEC 25010 |
+| 1.0.3 | 23/10/2026 | Felipe Penha | Descrição da arquitetura monolítica e das decisões de arquitetura |
+| 1.0.4 | 06/11/2026 | Henrique Gonzalez | Elaboração do plano de testes manuais e dos casos de teste |
+| 1.0.5 | 16/11/2026 | Matheus Sivero | Inclusão dos diagramas, da matriz de rastreabilidade e do glossário |
 | 1.1 | 23/11/2026 | Equipe do projeto | Atualização da documentação para refletir a implementação final: interface gráfica Swing (em vez de console), regras de validação efetivamente implementadas, formato real do histórico (CSV), métodos do código-fonte e casos de teste adicionais |
+| 1.2 | 26/11/2026 | Equipe do projeto | Reorganização do conteúdo no modelo padrão de documentação e atualização da lista de autores |
 
 ---
 
@@ -28,8 +34,7 @@
 7. [Plano e Casos de Teste](#7-plano-e-casos-de-teste)
 8. [Matriz de Rastreabilidade](#8-matriz-de-rastreabilidade-requisitos-x-testes-x-código-fonte)
 9. [Glossário](#9-glossário)
-10. [Diagramas](#10-diagramas)
-11. [Anexos e Referências](#11-anexos-e-referências)
+10. [Anexos e Referências](#10-anexos-e-referências)
 
 ---
 
@@ -90,7 +95,7 @@ Sistema **monolítico**, com **interface gráfica desktop (Java Swing)**, que re
 - Projeto deve permanecer **monolítico**: todo o código será implementado diretamente na classe `Main`, sem separação em camadas/pacotes (model, service, view etc.).
 - Sem uso de ferramentas de build (Maven/Gradle); compilação e execução manuais via `javac`/`java`.
 - Sem testes automatizados; validação por testes manuais.
-- Versão do Java ainda não definida formalmente (ver seção 6.4); o código utiliza apenas recursos disponíveis a partir do Java 8.
+- Versão do Java ainda não definida formalmente (ver seção 6.5); o código utiliza apenas recursos disponíveis a partir do Java 8.
 
 ### 2.6 Riscos identificados
 
@@ -279,7 +284,22 @@ Sistema **monolítico**, com **interface gráfica desktop (Java Swing)**, que re
 ### Convenção de ID
 `RNF-XX` (Requisito Não Funcional número XX)
 
-### 4.1 Lista de Requisitos Não Funcionais
+### 4.1 Categorias segundo ISO/IEC 25010
+
+A ISO/IEC 25010 define 8 características de qualidade de produto de software. Use-as para classificar cada RNF:
+
+| Característica ISO 25010 | Subcaracterísticas | Descrição |
+|---|---|---|
+| **Adequação Funcional** | Completude, Corretude, Pertinência funcional | O quanto o sistema atende às funções especificadas e às necessidades reais. |
+| **Eficiência de Desempenho** | Comportamento temporal, Utilização de recursos, Capacidade | Desempenho relativo à quantidade de recursos usados (tempo de resposta, throughput, uso de CPU/memória). |
+| **Compatibilidade** | Coexistência, Interoperabilidade | Capacidade de coexistir com outros sistemas e trocar informações com eles. |
+| **Usabilidade** | Reconhecibilidade, Aprendizagem, Operabilidade, Proteção contra erros, Estética, Acessibilidade | Facilidade de uso e aprendizado pelo usuário. |
+| **Confiabilidade** | Maturidade, Disponibilidade, Tolerância a falhas, Recuperabilidade | Capacidade de manter um nível de desempenho sob condições especificadas. |
+| **Segurança** | Confidencialidade, Integridade, Não repúdio, Responsabilização (accountability), Autenticidade | Proteção de informações e dados contra acesso não autorizado. |
+| **Manutenibilidade** | Modularidade, Reusabilidade, Analisabilidade, Modificabilidade, Testabilidade | Facilidade de modificar e evoluir o software. |
+| **Portabilidade** | Adaptabilidade, Instalabilidade, Substituibilidade | Facilidade de transferir o software entre ambientes. |
+
+### 4.2 Lista de Requisitos Não Funcionais
 
 | ID | Característica ISO 25010 | Subcaracterística | Descrição | Critério de aceite / Métrica | Prioridade |
 |---|---|---|---|---|---|
@@ -294,11 +314,15 @@ Sistema **monolítico**, com **interface gráfica desktop (Java Swing)**, que re
 
 > **Nota:** a versão do Java (8, 11, 17 ou 21) ainda não foi definida formalmente. O código-fonte utiliza apenas recursos disponíveis desde o Java 8; recomenda-se adotar uma versão **LTS** (11, 17 ou 21) para maior compatibilidade e suporte, mesmo em projeto acadêmico simples.
 
-### 4.2 Conformidade com a LGPD (Lei nº 13.709/2018)
+### 4.3 Conformidade com a LGPD (Lei nº 13.709/2018)
 
 **Não aplicável a este projeto.** A calculadora não coleta, armazena nem processa dados pessoais de titulares — o arquivo de histórico registra apenas operações matemáticas (operandos, operação, resultado e data/hora), sem qualquer identificação de usuário.
 
 Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: nome, e-mail, login), esta seção deve ser revisitada e os requisitos de LGPD reincorporados.
+
+### 4.4 Mapeamento RNF × ISO 25010 × LGPD
+
+*(não informado na documentação original)*
 
 ---
 
@@ -323,19 +347,36 @@ Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: 
 
 ## 6. Projeto e Arquitetura do Software
 
-### 6.1 Visão arquitetural
+### 6.1 Diagrama de casos de uso
+
+<img width=50% height=auto alt="diagrama de caso de uso drawio (1)" src="https://github.com/user-attachments/assets/de82071c-c5b0-4fd4-9799-ecf5597582fd" />
+
+**Descrição dos atores**
+
+*(não informado na documentação original)*
+
+**Lista de casos de uso**
+
+*(não informado na documentação original)*
+
+### 6.2 Visão arquitetural
+
 Arquitetura **monolítica simples**, sem separação em camadas (model/service/view). Todo o código-fonte é implementado dentro de uma única classe, `Main`, contendo o método `main` e os métodos estáticos de interface (`criarTela`, `atualizarRotulos`), cálculo (`calcular`, `fmt`), tratamento de erros (`erro`) e histórico (`registrarHistorico`, `exibirHistorico`). A interface gráfica é construída programaticamente com Java Swing e o estado da tela (campos, rótulos, lista de operações) é mantido em atributos estáticos da classe.
 
-### 6.2 Diagrama de arquitetura (visão geral)
+### 6.3 Diagrama de arquitetura (visão geral)
 
-### 6.3 Componentes / Módulos
+**Diagrama de Camadas**
+
+<img width=50% height=auto alt="Diagrama de Camadas da Calculadora Java" src="https://github.com/user-attachments/assets/aec5a82c-7ee5-499f-9acb-eb0eab1df7e7" />
+
+### 6.4 Componentes / Módulos
 
 | Componente | Responsabilidade | Tecnologia |
 |---|---|---|
 | Classe `Main` | Concentra toda a lógica: interface gráfica, operações, validação de entrada e histórico | Java (SE) + Swing (`javax.swing`, `java.awt`) |
 | Arquivo de histórico | Persistência simples de operações realizadas (`historico/historico.csv`) | Arquivo CSV em disco |
 
-### 6.4 Stack tecnológica
+### 6.5 Stack tecnológica
 
 | Camada | Tecnologia / Ferramenta | Versão |
 |---|---|---|
@@ -345,7 +386,8 @@ Arquitetura **monolítica simples**, sem separação em camadas (model/service/v
 | Persistência | Arquivo local (CSV, UTF-8) | — |
 | Testes | Testes manuais (sem framework) | — |
 
-### 6.5 Modelo de dados
+### 6.6 Modelo de dados
+
 Não há modelo de dados relacional (sem banco de dados). O único "dado persistido" é o registro de histórico, estruturado da seguinte forma (exemplo de linha em CSV):
 
 ```
@@ -359,7 +401,23 @@ data_hora,operacao,operando1,operando2,resultado
 
 Operações que resultam em erro (ex.: divisão por zero) **não** são registradas no arquivo; a mensagem de erro é exibida apenas na tela. Os valores possíveis da coluna `operacao` são: `SOMA`, `SUBTRACAO`, `MULTIPLICACAO`, `DIVISAO_SEM_RESTO`, `DIVISAO_COM_RESTO`, `POTENCIACAO` e `RADICIACAO`.
 
-### 6.6 Decisões de arquitetura (ADR resumido)
+### 6.7 Diagrama de classes
+
+<img alt="diagrama de classes-Página-4 drawio" src="https://github.com/user-attachments/assets/9e836d0f-b5f2-4568-b522-0e1ee1821601" style="width:50%;height:auto;display:block;margin:0 auto;" />
+
+**Descrição das principais classes**
+
+*(não informado na documentação original)*
+
+### 6.8 Diagrama de sequência
+
+<img width=50% height=auto alt="Diagrama de sequência-Página-5 drawio" src="https://github.com/user-attachments/assets/39f6baaf-668b-4477-a6e2-1f3feaf33c5b" />
+
+### 6.9 Padrões de projeto (GoF) utilizados
+
+*(não informado na documentação original)*
+
+### 6.10 Decisões de arquitetura (ADR resumido)
 
 | ID | Decisão | Contexto | Alternativas consideradas | Justificativa |
 |---|---|---|---|---|
@@ -369,7 +427,7 @@ Operações que resultam em erro (ex.: divisão por zero) **não** são registra
 | ADR-04 | Persistência via arquivo (CSV) em vez de banco de dados | Simplicidade e caráter didático | Banco de dados relacional (ex.: SQL Server) | Evita complexidade desnecessária de configuração e infraestrutura para um histórico simples |
 | ADR-05 | Utilizar interface gráfica Swing em vez de console | Melhor usabilidade e uso de bibliotecas já incluídas no JDK | Interface de console com menu numerado | Swing não exige dependências externas, permite seleção de operação em lista fechada e exibição de erros em caixas de diálogo |
 
-### 6.7 Estrutura de pastas do projeto
+### 6.11 Estrutura de pastas do projeto
 
 ```
 /src
@@ -382,7 +440,8 @@ Operações que resultam em erro (ex.: divisão por zero) **não** são registra
 
 A pasta `historico` e o arquivo `historico.csv` são criados automaticamente na primeira operação bem-sucedida, relativos ao diretório de execução da aplicação.
 
-### 6.8 Integrações externas
+### 6.12 Integrações externas
+
 Não há integrações com sistemas externos.
 
 ---
@@ -391,6 +450,10 @@ Não há integrações com sistemas externos.
 
 ### 7.1 Estratégia de testes
 Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração relevante no código, cobrindo os fluxos principais e as exceções previstas (entrada inválida, divisão por zero, radiciação inválida, potenciação indeterminada, gravação e consulta de histórico).
+
+**Testes unitários com JUnit**
+
+Conforme a documentação original, não há testes automatizados (JUnit); apenas testes manuais.
 
 ### 7.2 Ambientes de teste
 
@@ -475,25 +538,7 @@ Testes **manuais**, executados pelo próprio desenvolvedor a cada alteração re
 
 ---
 
-## 10. Diagramas 
-## 10.1 Diagrama de classe
-<img alt="diagrama de classes-Página-4 drawio" src="https://github.com/user-attachments/assets/9e836d0f-b5f2-4568-b522-0e1ee1821601" style="width:50%;height:auto;display:block;margin:0 auto;" />
-
-## 10.2 Diagrama de sequência
-<img width=50% height=auto alt="Diagrama de sequência-Página-5 drawio" src="https://github.com/user-attachments/assets/39f6baaf-668b-4477-a6e2-1f3feaf33c5b" />
-
-## 10.3 Diagrama de caso de uso
-<img width=50% height=auto alt="diagrama de caso de uso drawio (1)" src="https://github.com/user-attachments/assets/de82071c-c5b0-4fd4-9799-ecf5597582fd" />
-
-## 10.4 Diagrama de Camadas
-
-<img width=50% height=auto alt="Diagrama de Camadas da Calculadora Java" src="https://github.com/user-attachments/assets/aec5a82c-7ee5-499f-9acb-eb0eab1df7e7" />
-
-
-
----
-
-## 11. Anexos e Referências
+## 10. Anexos e Referências
 
 - Link para protótipos / wireframes: *(não aplicável — interface gráfica simples, sem protótipo prévio)*
 - Link para repositório de código: https://github.com/mlm5608/Projeto_Arquitetura_Monolitica
