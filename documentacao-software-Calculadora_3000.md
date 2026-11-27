@@ -606,5 +606,4 @@ Conforme a documentação original, não há testes automatizados (JUnit); apena
 
 - Link para protótipos / wireframes: *(não aplicável — interface gráfica simples, sem protótipo prévio)*
 - Link para repositório de código: https://github.com/mlm5608/Projeto_Arquitetura_Monolitica
-- Link para backlog / board: *(não aplicável)*
 - Documentos de referência: ISO/IEC 25010 (características de qualidade de software)
