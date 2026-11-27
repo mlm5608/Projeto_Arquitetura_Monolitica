@@ -95,7 +95,7 @@ Sistema **monolítico**, com **interface gráfica desktop (Java Swing)**, que re
 - Projeto deve permanecer **monolítico**: todo o código será implementado diretamente na classe `Main`, sem separação em camadas/pacotes (model, service, view etc.).
 - Sem uso de ferramentas de build (Maven/Gradle); compilação e execução manuais via `javac`/`java`.
 - Sem testes automatizados; validação por testes manuais.
-- Versão do Java ainda não definida formalmente (ver seção 6.5); o código utiliza apenas recursos disponíveis a partir do Java 8.
+- Projeto configurado para Java 25 (ver seção 6.5); o código utiliza apenas recursos disponíveis a partir do Java 8.
 
 ### 2.6 Riscos identificados
 
@@ -198,6 +198,35 @@ Sistema **monolítico**, com **interface gráfica desktop (Java Swing)**, que re
   - [ ] Divisão por zero é tratada com mensagem clara em ambos os modos, sem crash da aplicação.
   - [ ] Divisão "com resto" com números não inteiros é rejeitada com mensagem clara.
 - **Requisitos relacionados:** RNF-05 (confiabilidade), RN-01, RN-02
+
+#### RF-08 — Permanência da tela principal
+- **Descrição:** O sistema deve manter a tela principal disponível após a conclusão de cada operação, permitindo novo cálculo, até que o usuário escolha encerrar.
+- **Ator(es):** Usuário
+- **Pré-condições:** Aplicação em execução.
+- **Fluxo principal:**
+  1. Usuário realiza um cálculo.
+  2. Sistema exibe o resultado na própria janela, que permanece aberta.
+  3. Usuário informa novos valores ou escolhe outra operação.
+- **Fluxos alternativos / exceções:**
+  - Erro de entrada ou de cálculo → após o fechamento da caixa de diálogo, a tela principal continua disponível.
+- **Pós-condições:** Aplicação pronta para um novo cálculo.
+- **Critérios de aceite:**
+  - [ ] É possível realizar cálculos em sequência sem reiniciar a aplicação.
+- **Requisitos relacionados:** RF-01, RF-09, RNF-03
+
+#### RF-09 — Encerramento da aplicação
+- **Descrição:** O sistema deve permitir o encerramento controlado da aplicação pelo botão Sair ou pelo fechamento da janela.
+- **Ator(es):** Usuário
+- **Pré-condições:** Aplicação em execução.
+- **Fluxo principal:**
+  1. Usuário aciona o botão "Sair" ou fecha a janela.
+  2. Sistema encerra a aplicação.
+- **Fluxos alternativos / exceções:** Nenhum.
+- **Pós-condições:** Aplicação encerrada.
+- **Critérios de aceite:**
+  - [ ] O botão "Sair" encerra a aplicação.
+  - [ ] O fechamento da janela encerra a aplicação.
+- **Requisitos relacionados:** RF-08
 
 #### RF-10 — Potenciação
 - **Descrição:** O sistema deve receber a base e o expoente e calcular o resultado da base elevada ao expoente informado.
@@ -312,7 +341,7 @@ A ISO/IEC 25010 define 8 características de qualidade de produto de software. U
 | RNF-07 | Compatibilidade | Interoperabilidade | O arquivo de histórico deve ser gerado em formato aberto (CSV, codificação UTF-8) legível por editores de texto e planilhas. | Arquivo abre corretamente em editor de texto e em planilha | Média |
 | RNF-08 | Portabilidade | Adaptabilidade | O sistema deve rodar em qualquer ambiente com JDK compatível instalado e interface gráfica disponível (Windows, Linux, macOS). | Execução bem-sucedida via `javac`/`java` nos 3 sistemas operacionais | Média |
 
-> **Nota:** a versão do Java (8, 11, 17 ou 21) ainda não foi definida formalmente. O código-fonte utiliza apenas recursos disponíveis desde o Java 8; recomenda-se adotar uma versão **LTS** (11, 17 ou 21) para maior compatibilidade e suporte, mesmo em projeto acadêmico simples.
+> **Nota:** o projeto está configurado para o Java 25 (`javac.source` e `javac.target` em `nbproject/project.properties`). O código-fonte utiliza apenas recursos disponíveis desde o Java 8.
 
 ### 4.3 Conformidade com a LGPD (Lei nº 13.709/2018)
 
@@ -322,7 +351,18 @@ Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: 
 
 ### 4.4 Mapeamento RNF × ISO 25010 × LGPD
 
-*(não informado na documentação original)*
+| ID | Categoria | Referência normativa | Requisito(s) funcional(is) relacionado(s) |
+|---|---|---|---|
+| RNF-01 | Eficiência de Desempenho (ISO 25010) | ISO/IEC 25010 | RF-02 a RF-05, RF-10, RF-11 |
+| RNF-02 | Segurança (ISO 25010) | Não se aplica (sem dados pessoais) | — |
+| RNF-03 | Confiabilidade (ISO 25010) | ISO/IEC 25010 | RF-05, RF-06, RF-07, RF-10, RF-11 |
+| RNF-04 | Usabilidade (ISO 25010) | ISO/IEC 25010 | RF-01, RF-08 |
+| RNF-05 | Confiabilidade (ISO 25010) | ISO/IEC 25010 | RF-02 a RF-05, RF-10, RF-11 |
+| RNF-06 | Manutenibilidade (ISO 25010) | ISO/IEC 25010 | Todos |
+| RNF-07 | Compatibilidade (ISO 25010) | ISO/IEC 25010 | RF-06, RF-07 |
+| RNF-08 | Portabilidade (ISO 25010) | ISO/IEC 25010 | Todos |
+
+A LGPD não se aplica a este projeto (seção 4.3).
 
 ---
 
@@ -353,11 +393,24 @@ Caso o escopo evolua futuramente para incluir identificação de usuário (ex.: 
 
 **Descrição dos atores**
 
-*(não informado na documentação original)*
+| Ator | Descrição | Casos de uso associados |
+|---|---|---|
+| Usuário | Pessoa que utiliza a calculadora pela interface gráfica | UC-01 a UC-08 |
 
 **Lista de casos de uso**
 
-*(não informado na documentação original)*
+| ID | Caso de uso | Ator(es) | Requisito(s) funcional(is) relacionado(s) |
+|---|---|---|---|
+| UC-01 | Somar | Usuário | RF-02 |
+| UC-02 | Subtrair | Usuário | RF-03 |
+| UC-03 | Multiplicar | Usuário | RF-04 |
+| UC-04 | Dividir (com ou sem resto) | Usuário | RF-05 |
+| UC-05 | Calcular potência | Usuário | RF-10 |
+| UC-06 | Calcular raiz | Usuário | RF-11 |
+| UC-07 | Consultar histórico | Usuário | RF-07 |
+| UC-08 | Encerrar aplicação | Usuário | RF-09 |
+
+A exibição da tela principal (RF-01) e a permanência dela após cada operação (RF-08) valem para todos os casos de uso. O registro no histórico (RF-06) ocorre automaticamente em UC-01 a UC-06.
 
 ### 6.2 Visão arquitetural
 
@@ -380,7 +433,7 @@ Arquitetura **monolítica simples**, sem separação em camadas (model/service/v
 
 | Camada | Tecnologia / Ferramenta | Versão |
 |---|---|---|
-| Linguagem | Java (SE) | A definir — código compatível com Java 8 ou superior; recomendação: LTS (11, 17 ou 21) |
+| Linguagem | Java (SE) | 25 (configuração do projeto) |
 | Interface | Java Swing (`JFrame`, `JComboBox`, `JTextField`, `JCheckBox`, `JButton`, `JLabel`) | Incluído no JDK |
 | Build | Nenhum — compilação manual | `javac` / `java` |
 | Persistência | Arquivo local (CSV, UTF-8) | — |
@@ -407,7 +460,9 @@ Operações que resultam em erro (ex.: divisão por zero) **não** são registra
 
 **Descrição das principais classes**
 
-*(não informado na documentação original)*
+| Classe | Responsabilidade | Requisito(s) relacionado(s) |
+|---|---|---|
+| `Main` | Monta a interface (`criarTela`, `atualizarRotulos`), valida entradas e calcula (`calcular`, `fmt`), exibe erros (`erro`) e grava e consulta o histórico (`registrarHistorico`, `exibirHistorico`) | RF-01 a RF-11, RN-01 a RN-05 |
 
 ### 6.8 Diagrama de sequência
 
@@ -415,13 +470,13 @@ Operações que resultam em erro (ex.: divisão por zero) **não** são registra
 
 ### 6.9 Padrões de projeto (GoF) utilizados
 
-*(não informado na documentação original)*
+Nenhum padrão GoF foi implementado pela equipe: todo o código está em métodos estáticos da classe `Main` (ADR-02). A única ocorrência relacionada é o mecanismo de eventos do próprio Swing (`addActionListener`), baseado no padrão **Observer** (comportamental), usado nos botões e na lista de operações.
 
 ### 6.10 Decisões de arquitetura (ADR resumido)
 
 | ID | Decisão | Contexto | Alternativas consideradas | Justificativa |
 |---|---|---|---|---|
-| ADR-01 | Definir versão do Java a ser utilizada | Versão ainda não escolhida pelo autor | Java 8, 11, 17, 21 | *(pendente — recomendação: LTS mais recente disponível no ambiente do autor; o código é compatível com Java 8 ou superior)* |
+| ADR-01 | Utilizar Java 25 | Definição da versão do projeto | Java 8, 11, 17, 21 | Versão configurada no projeto (`nbproject/project.properties`); é uma versão LTS |
 | ADR-02 | Não utilizar camadas (model/service/view) | Projeto didático, escopo reduzido | Arquitetura em camadas | Simplicidade e foco no aprendizado de lógica básica |
 | ADR-03 | Não utilizar ferramenta de build (Maven/Gradle) | Projeto simples, sem dependências externas | Maven, Gradle | Não há dependências de terceiros que justifiquem a ferramenta |
 | ADR-04 | Persistência via arquivo (CSV) em vez de banco de dados | Simplicidade e caráter didático | Banco de dados relacional (ex.: SQL Server) | Evita complexidade desnecessária de configuração e infraestrutura para um histórico simples |
@@ -491,6 +546,8 @@ Conforme a documentação original, não há testes automatizados (JUnit); apena
 | CT-19 | RF-10 | Potenciação de zero com expoente negativo (indeterminação) | Aplicação em execução | 1. Selecionar "Potenciação" 2. Informar base 0 e expoente -2 3. Clicar em Calcular | Mensagem de erro específica ("0 elevado a expoente negativo é indeterminado."), sem crash | A executar |
 | CT-20 | RF-05 | Divisão com resto usando números não inteiros | Aplicação em execução | 1. Selecionar "Dividir" 2. Marcar a caixa "Divisão com resto" 3. Informar 10,5 e 3 4. Clicar em Calcular | Mensagem de erro específica ("Divisão com resto exige números inteiros."), sem crash | A executar |
 | CT-21 | RF-02 | Aceitação de vírgula como separador decimal | Aplicação em execução | 1. Selecionar "Somar" 2. Informar 2,5 e 1,5 3. Clicar em Calcular | Resultado exibido: 4 | A executar |
+| CT-22 | RF-08 | Cálculos em sequência | Aplicação em execução | 1. Somar 5 e 3 2. Sem fechar a janela, selecionar "Subtrair" 3. Clicar em Calcular | Segundo resultado exibido (2) na mesma janela | A executar |
+| CT-23 | RF-01, RNF-04 | Rótulos, caixa de divisão e tecla Enter | Aplicação em execução | 1. Selecionar "Dividir" e marcar a caixa 2. Selecionar "Potenciação" 3. Informar 2 e 3 e pressionar Enter | Rótulos mudam conforme a operação; caixa é desmarcada e desabilitada; resultado 8 | A executar |
 
 ---
 
@@ -505,13 +562,20 @@ Conforme a documentação original, não há testes automatizados (JUnit); apena
 | RF-05 | Divisão (com/sem resto) | CT-04, CT-04b, CT-05, CT-05b, CT-08, CT-20 | `Main.java` (método `calcular`, caso "Dividir") | Concluído | Pendente |
 | RF-06 | Registro de histórico | CT-09 | `Main.java` (método `registrarHistorico`) | Concluído | Pendente |
 | RF-07 | Consulta de histórico | CT-10 | `Main.java` (método `exibirHistorico`) | Concluído | Pendente |
+| RF-08 | Permanência da tela principal | CT-22 | `Main.java` (métodos `criarTela`, `calcular`) | Concluído | Pendente |
 | RF-09 | Encerramento da aplicação | CT-11 | `Main.java` (métodos `main` e `criarTela`, botão Sair) | Concluído | Pendente |
 | RF-10 | Potenciação | CT-12, CT-13, CT-14, CT-19, CT-08 | `Main.java` (método `calcular`, caso "Potenciação") | Concluído | Pendente |
 | RF-11 | Radiciação | CT-15, CT-16, CT-17, CT-18, CT-08 | `Main.java` (método `calcular`, caso "Radiciação") | Concluído | Pendente |
+| RNF-01 | Resposta imediata | CT-01 (observação) | `Main.java` (método `calcular`) | Concluído | Pendente |
 | RNF-03 | Tolerância a falhas | CT-04, CT-04b, CT-07, CT-08, CT-17, CT-18, CT-19, CT-20 | `Main.java` (blocos de validação e método `erro`) | Concluído | Pendente |
+| RNF-04 | Operabilidade da interface | CT-23 | `Main.java` (métodos `criarTela`, `atualizarRotulos`) | Concluído | Pendente |
 | RNF-05 | Corretude dos cálculos | CT-01 a CT-06, CT-12 a CT-16 | `Main.java` (método `calcular`) | Concluído | Pendente |
+| RNF-06 | Organização do código | Revisão de código | `Main.java` | Concluído | Pendente |
+| RNF-07 | Histórico em CSV UTF-8 | CT-09 (abrir também em planilha) | `Main.java` (método `registrarHistorico`) | Concluído | Pendente |
+| RNF-08 | Portabilidade | Execução de CT-01 em Windows, Linux e macOS | `Main.java` | Concluído | Pendente |
 | RN-01 | Sem limite de decimais/valores | CT-05, CT-06 | `Main.java` (uso de tipo `double` e método `fmt`) | Concluído | Pendente |
 | RN-02 | Tratamento de divisão por zero | CT-04, CT-04b | `Main.java` (método `calcular`, caso "Dividir") | Concluído | Pendente |
+| RN-03 | Operações em lista fechada e operandos numéricos | CT-07, CT-08 | `Main.java` (métodos `criarTela`, `calcular`) | Concluído | Pendente |
 | RN-04 | Radiciação de negativo com índice par | CT-17 | `Main.java` (método `calcular`, caso "Radiciação") | Concluído | Pendente |
 | RN-05 | Índice de raiz igual a zero | CT-18 | `Main.java` (método `calcular`, caso "Radiciação") | Concluído | Pendente |
 
